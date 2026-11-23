@@ -1515,31 +1515,40 @@
 
   /* MOBILE HEADER & DROPDOWN FIX */
   @media (max-width: 720px) {
-    header { position: static; }
+    header { position: static; padding: 12px 14px; }
     .cat-wrap { top: 0; }
+    .header-inner { flex-direction: column; align-items: stretch; gap: 10px; }
     .header-actions {
       width: 100%;
-      flex-wrap: wrap;
-      justify-content: space-between;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
       gap: 8px;
       min-width: 0;
     }
     .search-wrap {
-      flex: 1 1 100%;
+      width: 100%;
       max-width: 100%;
+      flex: none;
     }
     .sort-select {
-      flex: 1 1 140px;
+      width: 100%;
       max-width: 100%;
-      min-width: 135px;
+      min-width: 0;
+      padding: 10px 14px;
+      font-size: 13.5px;
+      height: 42px;
     }
     .nav-links {
-      flex-wrap: wrap;
-      gap: 6px;
+      width: 100%;
+      display: flex;
+      gap: 8px;
     }
     .nav-btn, .lang-btn {
-      padding: 8px 11px;
-      font-size: 12px;
+      flex: 1;
+      text-align: center;
+      padding: 9px 10px;
+      font-size: 12.5px;
     }
   }
 </style>
@@ -2289,13 +2298,28 @@ window.addEventListener("scroll", () => {
 let qvProduct = null;
 let qvImgIdx = 0;
 
+let ignoreNextPop = false;
+
 function pushModalHistory(name) {
   try {
-    history.pushState({ modal: name }, "");
+    history.pushState({ modal: name }, "", `#${name}`);
+  } catch (e) {}
+}
+
+function popModalHistory(name) {
+  try {
+    if (history.state && history.state.modal === name) {
+      ignoreNextPop = true;
+      history.back();
+    }
   } catch (e) {}
 }
 
 window.addEventListener("popstate", () => {
+  if (ignoreNextPop) {
+    ignoreNextPop = false;
+    return;
+  }
   const lb = document.getElementById("lightbox");
   const co = document.getElementById("checkoutModal");
   const qv = document.getElementById("quickViewModal");
@@ -2335,7 +2359,7 @@ function closeQuickView() {
   const qv = document.getElementById("quickViewModal");
   if (qv.classList.contains("open")) {
     qv.classList.remove("open");
-    if (history.state && history.state.modal === "quickView") history.back();
+    popModalHistory("quickView");
   }
 }
 function updateQuickViewMedia() {
@@ -2399,7 +2423,7 @@ function closeLightbox() {
   const lb = document.getElementById("lightbox");
   if (lb.classList.contains("open")) {
     lb.classList.remove("open");
-    if (history.state && history.state.modal === "lightbox") history.back();
+    popModalHistory("lightbox");
   }
 }
 function stepLightbox(dir) {
@@ -2434,7 +2458,7 @@ function closeCheckout() {
   const co = document.getElementById("checkoutModal");
   if (co.classList.contains("open")) {
     co.classList.remove("open");
-    if (history.state && history.state.modal === "checkout") history.back();
+    popModalHistory("checkout");
   }
 }
 function renderCheckoutItems() {
