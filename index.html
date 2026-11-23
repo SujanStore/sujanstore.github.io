@@ -1512,6 +1512,36 @@
   }
   .back-top.show { display: flex; }
   .back-top.lifted { bottom: 82px; }
+
+  /* MOBILE HEADER & DROPDOWN FIX */
+  @media (max-width: 720px) {
+    header { position: static; }
+    .cat-wrap { top: 0; }
+    .header-actions {
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 8px;
+      min-width: 0;
+    }
+    .search-wrap {
+      flex: 1 1 100%;
+      max-width: 100%;
+    }
+    .sort-select {
+      flex: 1 1 140px;
+      max-width: 100%;
+      min-width: 135px;
+    }
+    .nav-links {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .nav-btn, .lang-btn {
+      padding: 8px 11px;
+      font-size: 12px;
+    }
+  }
 </style>
 </head>
 <body>
@@ -2259,6 +2289,30 @@ window.addEventListener("scroll", () => {
 let qvProduct = null;
 let qvImgIdx = 0;
 
+function pushModalHistory(name) {
+  try {
+    history.pushState({ modal: name }, "");
+  } catch (e) {}
+}
+
+window.addEventListener("popstate", () => {
+  const lb = document.getElementById("lightbox");
+  const co = document.getElementById("checkoutModal");
+  const qv = document.getElementById("quickViewModal");
+  if (lb && lb.classList.contains("open")) {
+    lb.classList.remove("open");
+    return;
+  }
+  if (co && co.classList.contains("open")) {
+    co.classList.remove("open");
+    return;
+  }
+  if (qv && qv.classList.contains("open")) {
+    qv.classList.remove("open");
+    return;
+  }
+});
+
 function openQuickView(code) {
   qvProduct = PRODUCTS.find(p => p.code === code);
   if (!qvProduct) return;
@@ -2272,10 +2326,17 @@ function openQuickView(code) {
   updateQuickViewMedia();
   renderQuickViewAction();
   trackEvent("view_item", { item_id: qvProduct.code, item_name: qvProduct.name });
+  if (!document.getElementById("quickViewModal").classList.contains("open")) {
+    pushModalHistory("quickView");
+  }
   document.getElementById("quickViewModal").classList.add("open");
 }
 function closeQuickView() {
-  document.getElementById("quickViewModal").classList.remove("open");
+  const qv = document.getElementById("quickViewModal");
+  if (qv.classList.contains("open")) {
+    qv.classList.remove("open");
+    if (history.state && history.state.modal === "quickView") history.back();
+  }
 }
 function updateQuickViewMedia() {
   const img = document.getElementById("qvMainImg");
@@ -2302,6 +2363,9 @@ function openLightboxFromQuickView() {
   lbProduct = qvProduct;
   lbIndex = qvImgIdx;
   updateLightbox();
+  if (!document.getElementById("lightbox").classList.contains("open")) {
+    pushModalHistory("lightbox");
+  }
   document.getElementById("lightbox").classList.add("open");
 }
 function shareQuickViewProduct() {
@@ -2326,10 +2390,17 @@ function openLightbox(code) {
   if (!lbProduct) return;
   lbIndex = activeCardImg[code] || 0;
   updateLightbox();
+  if (!document.getElementById("lightbox").classList.contains("open")) {
+    pushModalHistory("lightbox");
+  }
   document.getElementById("lightbox").classList.add("open");
 }
 function closeLightbox() {
-  document.getElementById("lightbox").classList.remove("open");
+  const lb = document.getElementById("lightbox");
+  if (lb.classList.contains("open")) {
+    lb.classList.remove("open");
+    if (history.state && history.state.modal === "lightbox") history.back();
+  }
 }
 function stepLightbox(dir) {
   if (!lbProduct) return;
@@ -2354,10 +2425,17 @@ function updateLightbox() {
 function openCheckout() {
   renderCheckoutItems();
   document.getElementById("orderStatus").textContent = "";
+  if (!document.getElementById("checkoutModal").classList.contains("open")) {
+    pushModalHistory("checkout");
+  }
   document.getElementById("checkoutModal").classList.add("open");
 }
 function closeCheckout() {
-  document.getElementById("checkoutModal").classList.remove("open");
+  const co = document.getElementById("checkoutModal");
+  if (co.classList.contains("open")) {
+    co.classList.remove("open");
+    if (history.state && history.state.modal === "checkout") history.back();
+  }
 }
 function renderCheckoutItems() {
   const entries = Object.entries(cart);
