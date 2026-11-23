@@ -1383,9 +1383,142 @@
     width: 22px;
     background: #E8CA7F;
   }
+
+  /* TOP ANNOUNCEMENT BAR */
+  .announce-bar {
+    background: linear-gradient(90deg, #3B0A15 0%, #6B182C 50%, #3B0A15 100%);
+    color: #F7E8C4;
+    text-align: center;
+    padding: 7px 14px;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.3px;
+    border-bottom: 1px solid rgba(201, 162, 77, 0.35);
+  }
+  .announce-bar strong { color: #FFFFFF; }
+
+  /* SUBTLE MANDALA / FILIGREE ACCENTS */
+  .hero-card, .hl-banner {
+    background-image:
+      radial-gradient(circle at 92% 18%, rgba(201, 162, 77, 0.18) 0%, transparent 45%),
+      radial-gradient(circle at 6% 88%, rgba(201, 162, 77, 0.12) 0%, transparent 40%),
+      linear-gradient(125deg, #531121 0%, #2D0711 100%);
+  }
+  .gold-ornament {
+    text-align: center;
+    color: var(--gold);
+    font-size: 13px;
+    letter-spacing: 8px;
+    margin: 22px 0 4px;
+    opacity: 0.85;
+  }
+
+  /* CATEGORY PHOTO CIRCLES */
+  .cat-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+  }
+  .cat-thumb {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 1.5px solid rgba(201, 162, 77, 0.55);
+    background: #fff;
+    flex-shrink: 0;
+  }
+
+  /* IMAGE SHIMMER & CARD FADE-IN */
+  @keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+  }
+  .img-wrap {
+    background: linear-gradient(90deg, #F5F1EB 25%, #FAF7F2 50%, #F5F1EB 75%);
+    background-size: 200% 100%;
+    animation: shimmer 2.4s infinite linear;
+  }
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .card {
+    animation: fadeUp 0.32s ease both;
+  }
+
+  /* BOUTIQUE FOOTER & BACK-TO-TOP */
+  .social-pill svg {
+    width: 15px;
+    height: 15px;
+    flex-shrink: 0;
+  }
+  footer.site-footer {
+    margin-top: 34px;
+    background: linear-gradient(155deg, #490E1C 0%, #26060E 100%);
+    color: #F4DFB0;
+    border-top: 2px solid rgba(201, 162, 77, 0.5);
+    padding: 30px 16px 36px;
+    text-align: center;
+  }
+  .footer-inner {
+    max-width: 960px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+  }
+  .footer-logo {
+    width: 54px;
+    height: auto;
+    filter: drop-shadow(0 4px 10px rgba(0,0,0,0.4));
+  }
+  .footer-brand {
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 22px;
+    color: #FFFFFF;
+    margin: 0;
+  }
+  .footer-sub {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.78);
+    margin: 0;
+  }
+  .footer-copy {
+    font-size: 11.5px;
+    color: rgba(244, 223, 176, 0.7);
+    margin-top: 6px;
+  }
+  .back-top {
+    position: fixed;
+    left: 18px;
+    bottom: 20px;
+    z-index: 38;
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    border: 1px solid rgba(201, 162, 77, 0.55);
+    background: rgba(24, 20, 21, 0.86);
+    color: #E8CA7F;
+    font-size: 18px;
+    font-weight: 800;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 6px 18px rgba(0,0,0,0.22);
+    transition: bottom 0.2s ease;
+  }
+  .back-top.show { display: flex; }
+  .back-top.lifted { bottom: 82px; }
 </style>
 </head>
 <body>
+
+<div class="announce-bar" id="announceBar">
+  ✨ <strong>Cash on Delivery Available</strong> &nbsp;•&nbsp; Free Delivery Inside Kathmandu Valley &nbsp;•&nbsp; WhatsApp +977 9851237839
+</div>
 
 <header>
   <div class="header-inner">
@@ -1426,7 +1559,8 @@
     </div>
     <div class="hero-badges">
       <span class="hero-badge" id="heroBadge1">Free Delivery in Kathmandu Valley</span>
-      <span class="hero-badge" id="heroBadge2">Cash &amp; Digital Payment</span>
+      <span class="hero-badge" id="heroBadge2">Cash on Delivery Available</span>
+      <span class="hero-badge" id="heroBadge3">eSewa • Khalti • Fonepay</span>
     </div>
   </div>
 </section>
@@ -1506,16 +1640,32 @@
         curated for weddings, Bratabandha, Pasni, and special cultural celebrations.
       </p>
       <div class="info-tags">
+        <span class="info-tag">Cash on Delivery Available</span>
         <span class="info-tag">Free Delivery in Kathmandu Valley</span>
         <span class="info-tag">Nationwide Shipping</span>
-        <span class="info-tag">Cash &amp; Digital Payment</span>
+        <span class="info-tag">eSewa / Khalti / Fonepay</span>
       </div>
       <div class="social-row">
-        <a class="social-pill" href="https://www.facebook.com/sujanstore.makhan" target="_blank">Facebook</a>
-        <a class="social-pill" href="https://instagram.com/store_sujan" target="_blank">Instagram</a>
-        <a class="social-pill" href="https://tiktok.com/@sujan_store" target="_blank">TikTok</a>
-        <a class="social-pill" href="https://www.daraz.com.np/shop/qph7mfs9" target="_blank">Daraz Store</a>
-        <a class="social-pill" href="https://linktr.ee/SujanStore" target="_blank">Linktree</a>
+        <a class="social-pill" href="https://www.facebook.com/sujanstore.makhan" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M22 12a10 10 0 1 0-11.56 9.88v-6.99H7.9V12h2.54V9.8c0-2.5 1.49-3.89 3.77-3.89 1.09 0 2.24.2 2.24.2v2.46h-1.26c-1.24 0-1.63.77-1.63 1.56V12h2.78l-.44 2.89h-2.34v6.99A10 10 0 0 0 22 12Z"/></svg>
+          Facebook
+        </a>
+        <a class="social-pill" href="https://instagram.com/store_sujan" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+          Instagram
+        </a>
+        <a class="social-pill" href="https://tiktok.com/@sujan_store" target="_blank">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-5.2 1.74 2.89 2.89 0 0 1 2.31-4.64 2.93 2.93 0 0 1 .88.13V9.4a6.84 6.84 0 0 0-1-.05A6.33 6.33 0 0 0 5 20.1a6.34 6.34 0 0 0 10.86-4.43v-7a8.16 8.16 0 0 0 4.77 1.52v-3.4a4.85 4.85 0 0 1-1-.1Z"/></svg>
+          TikTok
+        </a>
+        <a class="social-pill" href="https://www.daraz.com.np/shop/qph7mfs9" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"/><path d="M3 6h18"/><path d="M16 10a4 4 0 0 1-8 0"/></svg>
+          Daraz Store
+        </a>
+        <a class="social-pill" href="https://linktr.ee/SujanStore" target="_blank">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg>
+          Linktree
+        </a>
       </div>
     </div>
     <div class="info-block">
@@ -1534,6 +1684,17 @@
     </div>
   </div>
 </section>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <img class="footer-logo" src="logo.png" alt="Sujan Store" onerror="this.style.display='none'" />
+    <h3 class="footer-brand">Sujan Store</h3>
+    <p class="footer-sub">Cash on Delivery Available &nbsp;•&nbsp; Free Delivery Inside Kathmandu Valley &nbsp;•&nbsp; Nationwide Shipping</p>
+    <div class="footer-copy">© Sujan Store, Kathmandu, Nepal • WhatsApp: +977 9851237839</div>
+  </div>
+</footer>
+
+<button class="back-top" id="backTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
 
 <div class="cart-bar" id="cartBar">
   <div class="summary" id="cartSummary"></div>
@@ -1810,7 +1971,8 @@ const I18N = {
     heroTitle: "Handcrafted Elegance for Every Celebration",
     heroSub: "Tap any photo to zoom & view angles. Select your pieces and send your order directly on WhatsApp.",
     heroBadge1: "Free Delivery in Kathmandu Valley",
-    heroBadge2: "Cash & Digital Payment",
+    heroBadge2: "Cash on Delivery Available",
+    announce: "✨ <strong>Cash on Delivery Available</strong> &nbsp;•&nbsp; Free Delivery Inside Kathmandu Valley &nbsp;•&nbsp; WhatsApp +977 9851237839",
     addBtn: "+ Add to Order",
     pcs: "pcs",
     allCat: "All",
@@ -1827,7 +1989,8 @@ const I18N = {
     heroTitle: "हरेक शुभ अवसरका लागि हस्तनिर्मित सुन्दरता",
     heroSub: "फोटो ठूलो पार्न ट्याप गर्नुहोस्। सामान छानेर सिधै WhatsApp मा अर्डर पठाउनुहोस्।",
     heroBadge1: "काठमाडौं उपत्यकाभित्र निःशुल्क डेलिभरी",
-    heroBadge2: "नगद तथा डिजिटल भुक्तानी",
+    heroBadge2: "क्यास अन डेलिभरी (COD) उपलब्ध",
+    announce: "✨ <strong>क्यास अन डेलिभरी (COD) उपलब्ध</strong> &nbsp;•&nbsp; काठमाडौं उपत्यकाभित्र निःशुल्क डेलिभरी &nbsp;•&nbsp; WhatsApp +977 9851237839",
     addBtn: "+ अर्डरमा थप्नुहोस्",
     pcs: "थान",
     allCat: "सबै",
@@ -1856,6 +2019,8 @@ function applyLang() {
   document.getElementById("heroSub").textContent = t.heroSub;
   document.getElementById("heroBadge1").textContent = t.heroBadge1;
   document.getElementById("heroBadge2").textContent = t.heroBadge2;
+  const ann = document.getElementById("announceBar");
+  if (ann && t.announce) ann.innerHTML = t.announce;
   const wa = document.getElementById("waFloat");
   if (wa) wa.textContent = t.waFloat;
 }
@@ -1906,11 +2071,19 @@ function renderCategories() {
     <button class="cat-pill ${activeSection === '__SAVED__' ? 'active' : ''}" onclick="setSection('__SAVED__')">
       ♥ ${t.savedCat} (${savedCount})
     </button>`;
-  bar.innerHTML = all.map(sec => `
-    <button class="cat-pill ${sec === activeSection ? 'active' : ''}" onclick="setSection('${sec.replace(/'/g, "\\'")}')">
-      ${sec === "All" ? t.allCat : sec}
-    </button>
-  `).join("") + savedBtn;
+  bar.innerHTML = all.map(sec => {
+    let thumb = "";
+    if (sec !== "All") {
+      const sample = PRODUCTS.find(p => p.section === sec && p.images && p.images.length);
+      if (sample) {
+        thumb = `<img class="cat-thumb" src="${sample.images[0]}" alt="" loading="lazy" />`;
+      }
+    }
+    return `
+      <button class="cat-pill ${sec === activeSection ? 'active' : ''}" onclick="setSection('${sec.replace(/'/g, "\\'")}')">
+        ${thumb}<span>${sec === "All" ? t.allCat : sec}</span>
+      </button>`;
+  }).join("") + savedBtn;
 }
 
 function setSection(sec) {
@@ -2056,9 +2229,11 @@ function renderCartBar() {
   const entries = Object.entries(cart);
   const bar = document.getElementById("cartBar");
   const waFloat = document.getElementById("waFloat");
+  const backTop = document.getElementById("backTop");
   if (!entries.length) {
     bar.classList.remove("show");
     if (waFloat) waFloat.classList.remove("lifted");
+    if (backTop) backTop.classList.remove("lifted");
     return;
   }
   let totalPcs = 0;
@@ -2072,7 +2247,13 @@ function renderCartBar() {
     `<strong>${entries.length} product${entries.length > 1 ? 's' : ''} (${totalPcs} pcs)</strong> • Est. NPR ${totalNpr.toLocaleString()}`;
   bar.classList.add("show");
   if (waFloat) waFloat.classList.add("lifted");
+  if (backTop) backTop.classList.add("lifted");
 }
+
+window.addEventListener("scroll", () => {
+  const bt = document.getElementById("backTop");
+  if (bt) bt.classList.toggle("show", window.scrollY > 360);
+});
 
 /* QUICK-VIEW */
 let qvProduct = null;
