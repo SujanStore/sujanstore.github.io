@@ -9,6 +9,7 @@
 <link rel="apple-touch-icon" href="favicon.png" />
 <link rel="manifest" href="manifest.json" />
 <meta name="theme-color" content="#6B182C" />
+
 <meta property="og:type" content="website" />
 <meta property="og:title" content="Sujan Store — Official Product Catalog" />
 <meta property="og:description" content="Traditional Ceremonial Wear, Jewelry, Bags &amp; Cosmetics • Free Delivery Inside Kathmandu Valley" />
@@ -1152,6 +1153,74 @@
   }
   .wa-float:hover { transform: translateY(-2px); }
   .wa-float.lifted { bottom: 82px; }
+
+  /* LANGUAGE TOGGLE, WISHLIST & OCCASION BAR */
+  .lang-btn {
+    padding: 9px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--accent);
+    background: #FDF8F9;
+    color: var(--accent);
+    font-size: 12.5px;
+    font-weight: 800;
+    cursor: pointer;
+    white-space: nowrap;
+    font-family: inherit;
+  }
+  .lang-btn:hover { background: var(--accent); color: #fff; }
+  .wish-btn {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: 1px solid rgba(0,0,0,0.08);
+    background: rgba(255,255,255,0.92);
+    color: #9A8A8C;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    z-index: 3;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    transition: transform 0.15s ease, color 0.15s ease;
+  }
+  .wish-btn:hover { transform: scale(1.08); }
+  .wish-btn.active { color: #D92344; }
+  .card .new-badge { right: 46px; }
+  .occ-wrap {
+    max-width: 1200px;
+    margin: 14px auto 0;
+    padding: 0 16px;
+  }
+  .occ-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .occ-bar::-webkit-scrollbar { display: none; }
+  .occ-pill {
+    white-space: nowrap;
+    padding: 7px 14px;
+    border-radius: 999px;
+    border: 1px solid rgba(201, 162, 77, 0.55);
+    background: #FFFBF2;
+    color: #6B4E16;
+    font-size: 12.5px;
+    font-weight: 700;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .occ-pill.active, .occ-pill:hover {
+    background: linear-gradient(135deg, #D9B45D, #C19438);
+    color: #181415;
+    border-color: #C19438;
+  }
 </style>
 </head>
 <body>
@@ -1178,8 +1247,9 @@
         <option value="price-desc">Price: High → Low</option>
       </select>
       <div class="nav-links">
-        <a class="nav-btn" href="#about-contact">About Us</a>
-        <a class="nav-btn primary" href="#about-contact">Contact</a>
+        <button class="lang-btn" id="langBtn" onclick="toggleLang()">नेपाली</button>
+        <a class="nav-btn" id="navAbout" href="#about-contact">About Us</a>
+        <a class="nav-btn primary" id="navContact" href="#about-contact">Contact</a>
       </div>
     </div>
   </div>
@@ -1188,16 +1258,20 @@
 <section class="hero">
   <div class="hero-card">
     <div>
-      <span class="hero-eyebrow">Official Collection</span>
-      <h2>Handcrafted Elegance for Every Celebration</h2>
-      <p>Tap any photo to zoom &amp; view angles. Select your pieces and send your order directly on WhatsApp.</p>
+      <span class="hero-eyebrow" id="heroEyebrow">Official Collection</span>
+      <h2 id="heroTitle">Handcrafted Elegance for Every Celebration</h2>
+      <p id="heroSub">Tap any photo to zoom &amp; view angles. Select your pieces and send your order directly on WhatsApp.</p>
     </div>
     <div class="hero-badges">
-      <span class="hero-badge">Free Delivery in Kathmandu Valley</span>
-      <span class="hero-badge">Cash &amp; Digital Payment</span>
+      <span class="hero-badge" id="heroBadge1">Free Delivery in Kathmandu Valley</span>
+      <span class="hero-badge" id="heroBadge2">Cash &amp; Digital Payment</span>
     </div>
   </div>
 </section>
+
+<div class="occ-wrap">
+  <div class="occ-bar" id="occBar"></div>
+</div>
 
 <div class="cat-wrap">
   <div class="cat-bar" id="catBar"></div>
@@ -1530,21 +1604,138 @@ async function syncCatalogWithLiveSheet() {
 }
 
 let activeSection = "All";
+let activeOccasion = "all";
 let searchTerm = "";
-const cart = {};
+let currentLang = localStorage.getItem("sujan_lang") || "en";
+const cart = JSON.parse(localStorage.getItem("sujan_cart") || "{}");
+const wishlist = new Set(JSON.parse(localStorage.getItem("sujan_wishlist") || "[]"));
 const activeCardImg = {};
+
+function saveState() {
+  try {
+    localStorage.setItem("sujan_cart", JSON.stringify(cart));
+    localStorage.setItem("sujan_wishlist", JSON.stringify([...wishlist]));
+    localStorage.setItem("sujan_lang", currentLang);
+  } catch (e) {}
+}
+
+function trackEvent(eventName, params = {}) {
+  if (typeof window.gtag === "function") {
+    window.gtag("event", eventName, params);
+  }
+}
+
+const I18N = {
+  en: {
+    langBtn: "नेपाली",
+    navAbout: "About Us",
+    navContact: "Contact",
+    searchPh: "Search mala, bag, code...",
+    heroEyebrow: "Official Collection",
+    heroTitle: "Handcrafted Elegance for Every Celebration",
+    heroSub: "Tap any photo to zoom & view angles. Select your pieces and send your order directly on WhatsApp.",
+    heroBadge1: "Free Delivery in Kathmandu Valley",
+    heroBadge2: "Cash & Digital Payment",
+    addBtn: "+ Add to Order",
+    pcs: "pcs",
+    allCat: "All",
+    savedCat: "Saved",
+    inquiry: "Price on Inquiry",
+    waFloat: "💬 Chat on WhatsApp",
+  },
+  ne: {
+    langBtn: "English",
+    navAbout: "हाम्रो बारेमा",
+    navContact: "सम्पर्क",
+    searchPh: "माला, ब्याग, कोड खोज्नुहोस्...",
+    heroEyebrow: "आधिकारिक संकलन",
+    heroTitle: "हरेक शुभ अवसरका लागि हस्तनिर्मित सुन्दरता",
+    heroSub: "फोटो ठूलो पार्न ट्याप गर्नुहोस्। सामान छानेर सिधै WhatsApp मा अर्डर पठाउनुहोस्।",
+    heroBadge1: "काठमाडौं उपत्यकाभित्र निःशुल्क डेलिभरी",
+    heroBadge2: "नगद तथा डिजिटल भुक्तानी",
+    addBtn: "+ अर्डरमा थप्नुहोस्",
+    pcs: "थान",
+    allCat: "सबै",
+    savedCat: "मनपरेका",
+    inquiry: "मूल्य सोधपुछ",
+    waFloat: "💬 WhatsApp मा कुरा गर्नुहोस्",
+  },
+};
+
+const OCCASIONS = [
+  { id: "all", en: "✨ All Occasions", ne: "✨ सबै अवसर", match: () => true },
+  { id: "wedding", en: "💍 Wedding", ne: "💍 विवाह", match: p => ["Ghumto", "Nariwol set", "Set", "Crown", "Sindur", "Sindur Chopne", "Pote", "Bangle", "Bag", "Mala", "Natthi", "Saree Pin", "Shoes"].includes(p.group) },
+  { id: "annaprasan", en: "👶 Annaprasan / Pasni", ne: "👶 अन्नप्राशन / पास्नी", match: p => (p.name + " " + (p.daraz_name || "")).toLowerCase().includes("annaprasan") || ["Mala", "Tika", "Ala"].includes(p.group) },
+  { id: "festive", en: "🪔 Festive & Puja", ne: "🪔 चाडपर्व र पूजा", match: p => ["Mala", "Tika", "Saptarangi Tika", "Dhago", "Bangle", "Pote", "Bag", "Ala"].includes(p.group) },
+  { id: "beauty", en: "💄 Beauty & Makeup", ne: "💄 शृंगार र मेकअप", match: p => ["Kajal", "Blush", "Mascara", "Nail Polish", "Hair Pin", "Tika"].includes(p.group) },
+];
+
+function applyLang() {
+  const t = I18N[currentLang] || I18N.en;
+  document.getElementById("langBtn").textContent = t.langBtn;
+  document.getElementById("navAbout").textContent = t.navAbout;
+  document.getElementById("navContact").textContent = t.navContact;
+  document.getElementById("searchInput").placeholder = t.searchPh;
+  document.getElementById("heroEyebrow").textContent = t.heroEyebrow;
+  document.getElementById("heroTitle").textContent = t.heroTitle;
+  document.getElementById("heroSub").textContent = t.heroSub;
+  document.getElementById("heroBadge1").textContent = t.heroBadge1;
+  document.getElementById("heroBadge2").textContent = t.heroBadge2;
+  const wa = document.getElementById("waFloat");
+  if (wa) wa.textContent = t.waFloat;
+}
+
+function toggleLang() {
+  currentLang = currentLang === "en" ? "ne" : "en";
+  saveState();
+  applyLang();
+  renderOccasions();
+  renderCategories();
+  renderGrid();
+}
+
+function renderOccasions() {
+  const bar = document.getElementById("occBar");
+  if (!bar) return;
+  bar.innerHTML = OCCASIONS.map(o => `
+    <button class="occ-pill ${o.id === activeOccasion ? 'active' : ''}" onclick="setOccasion('${o.id}')">
+      ${currentLang === "ne" ? o.ne : o.en}
+    </button>
+  `).join("");
+}
+
+function setOccasion(id) {
+  activeOccasion = id;
+  renderOccasions();
+  renderGrid();
+}
+
+function toggleWish(code, ev) {
+  if (ev) ev.stopPropagation();
+  if (wishlist.has(code)) wishlist.delete(code);
+  else wishlist.add(code);
+  saveState();
+  renderCategories();
+  renderGrid();
+}
 
 let lbProduct = null;
 let lbIndex = 0;
 
 function renderCategories() {
+  const t = I18N[currentLang] || I18N.en;
   const bar = document.getElementById("catBar");
   const all = ["All", ...SECTIONS];
+  const savedCount = wishlist.size;
+  const savedBtn = `
+    <button class="cat-pill ${activeSection === '__SAVED__' ? 'active' : ''}" onclick="setSection('__SAVED__')">
+      ♥ ${t.savedCat} (${savedCount})
+    </button>`;
   bar.innerHTML = all.map(sec => `
     <button class="cat-pill ${sec === activeSection ? 'active' : ''}" onclick="setSection('${sec.replace(/'/g, "\\'")}')">
-      ${sec}
+      ${sec === "All" ? t.allCat : sec}
     </button>
-  `).join("");
+  `).join("") + savedBtn;
 }
 
 function setSection(sec) {
@@ -1556,10 +1747,16 @@ function setSection(sec) {
 function getFiltered() {
   const q = searchTerm.trim().toLowerCase();
   const sortBy = document.getElementById("sortSelect").value;
+  const occObj = OCCASIONS.find(o => o.id === activeOccasion) || OCCASIONS[0];
   const list = PRODUCTS.filter(p => {
-    const matchSec = activeSection === "All" || p.section === activeSection;
+    const matchSec = activeSection === "All"
+      ? true
+      : activeSection === "__SAVED__"
+        ? wishlist.has(p.code)
+        : p.section === activeSection;
+    const matchOcc = occObj.match(p);
     const matchQ = !q || p.name.toLowerCase().includes(q) || (p.nepali_name || "").toLowerCase().includes(q) || (p.daraz_name || "").toLowerCase().includes(q) || p.code.toLowerCase().includes(q) || p.group.toLowerCase().includes(q);
-    return matchSec && matchQ;
+    return matchSec && matchOcc && matchQ;
   });
   if (sortBy === "price-asc") {
     list.sort((a, b) => (a.price || 999999) - (b.price || 999999));
@@ -1616,10 +1813,12 @@ function renderGrid() {
   document.getElementById("statsLine").textContent = `Showing ${list.length} of ${PRODUCTS.length} available products`;
   const grid = document.getElementById("productGrid");
 
+  const t = I18N[currentLang] || I18N.en;
   grid.innerHTML = list.map(p => {
     const curIdx = activeCardImg[p.code] || 0;
     const qty = cart[p.code] || 0;
-    const priceText = p.price > 0 ? `NPR ${p.price.toLocaleString()}` : "Price on Inquiry";
+    const isWished = wishlist.has(p.code);
+    const priceText = p.price > 0 ? `NPR ${p.price.toLocaleString()}` : t.inquiry;
     const newTag = p.is_new ? `<span class="new-badge">NEW</span>` : "";
     const thumbsHtml = p.images.length > 1 ? `
       <div class="thumbs" id="thumbs-${p.code}">
@@ -1631,10 +1830,10 @@ function renderGrid() {
     const actionHtml = qty > 0 ? `
       <div class="qty-box">
         <button onclick="updateQty('${p.code}', -1)">−</button>
-        <span>${qty} pcs</span>
+        <span>${qty} ${t.pcs}</span>
         <button onclick="updateQty('${p.code}', 1)">+</button>
       </div>` : `
-      <button class="add-btn" onclick="updateQty('${p.code}', 1)">+ Add to Order</button>`;
+      <button class="add-btn" onclick="updateQty('${p.code}', 1)">${t.addBtn}</button>`;
 
     return `
       <div class="card">
@@ -1642,6 +1841,7 @@ function renderGrid() {
           <img id="main-${p.code}" class="main-photo" src="${p.images[curIdx]}" alt="${p.name}" loading="lazy" onerror="handleImgError(this)" />
           <span class="sku-tag">${p.code}</span>
           ${newTag}
+          <button class="wish-btn ${isWished ? 'active' : ''}" onclick="toggleWish('${p.code}', event)" title="Save to Favorites">${isWished ? '♥' : '♡'}</button>
           <span class="zoom-btn" title="Quick View &amp; Zoom">🔍</span>
         </div>
         ${thumbsHtml}
@@ -1662,7 +1862,11 @@ function renderGrid() {
 function updateQty(code, delta) {
   const next = (cart[code] || 0) + delta;
   if (next <= 0) delete cart[code];
-  else cart[code] = next;
+  else {
+    cart[code] = next;
+    if (delta > 0) trackEvent("add_to_cart", { item_id: code, quantity: delta });
+  }
+  saveState();
   renderGrid();
   renderCartBar();
   if (qvProduct && qvProduct.code === code && document.getElementById("quickViewModal").classList.contains("open")) {
@@ -1711,6 +1915,7 @@ function openQuickView(code) {
   document.getElementById("qvDesc").textContent = qvProduct.daraz_name || "";
   updateQuickViewMedia();
   renderQuickViewAction();
+  trackEvent("view_item", { item_id: qvProduct.code, item_name: qvProduct.name });
   document.getElementById("quickViewModal").classList.add("open");
 }
 function closeQuickView() {
@@ -1948,8 +2153,11 @@ function showToast(text) {
 }
 
 function resetToHomeAfterOrder(toastText) {
+  trackEvent("purchase", { item_count: Object.keys(cart).length });
   Object.keys(cart).forEach(k => delete cart[k]);
+  saveState();
   activeSection = "All";
+  activeOccasion = "all";
   searchTerm = "";
   const searchEl = document.getElementById("searchInput");
   if (searchEl) searchEl.value = "";
@@ -1989,8 +2197,11 @@ document.getElementById("searchInput").addEventListener("input", e => {
   renderGrid();
 });
 
+applyLang();
+renderOccasions();
 renderCategories();
 renderGrid();
+renderCartBar();
 syncCatalogWithLiveSheet();
 const itemParam = new URLSearchParams(window.location.search).get("item");
 if (itemParam) {
