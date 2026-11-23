@@ -1221,6 +1221,168 @@
     color: #181415;
     border-color: #C19438;
   }
+
+  /* PRODUCT HIGHLIGHT AUTO-SCROLL BANNER */
+  .hl-wrap {
+    max-width: 1200px;
+    margin: 14px auto 0;
+    padding: 0 16px;
+  }
+  .hl-banner {
+    position: relative;
+    background: linear-gradient(125deg, #531121 0%, #2D0711 100%);
+    color: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(45, 7, 17, 0.16);
+    border: 1px solid rgba(201, 162, 77, 0.4);
+  }
+  .hl-track {
+    display: flex;
+    transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .hl-slide {
+    min-width: 100%;
+    padding: 20px 52px 30px;
+    display: grid;
+    grid-template-columns: 230px 1fr;
+    gap: 22px;
+    align-items: center;
+  }
+  @media (max-width: 680px) {
+    .hl-slide {
+      grid-template-columns: 1fr;
+      padding: 16px 20px 32px;
+      text-align: center;
+      gap: 12px;
+    }
+  }
+  .hl-img-box {
+    background: #fff;
+    border-radius: 16px;
+    height: 195px;
+    padding: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    box-shadow: 0 10px 24px rgba(0,0,0,0.25);
+  }
+  @media (max-width: 680px) {
+    .hl-img-box { height: 165px; max-width: 220px; margin: 0 auto; width: 100%; }
+  }
+  .hl-img-box img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+  }
+  .hl-eyebrow {
+    display: inline-block;
+    font-size: 10.5px;
+    font-weight: 800;
+    letter-spacing: 1.4px;
+    text-transform: uppercase;
+    color: #E8CA7F;
+    margin-bottom: 5px;
+  }
+  .hl-title {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(19px, 2.6vw, 27px);
+    color: #fff;
+    line-height: 1.2;
+  }
+  .hl-nep {
+    font-size: 14px;
+    color: #F4DFB0;
+    margin-top: 3px;
+    font-weight: 600;
+  }
+  .hl-desc {
+    font-size: 12.5px;
+    color: rgba(255,255,255,0.8);
+    margin: 7px 0 10px;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .hl-bottom {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  @media (max-width: 680px) {
+    .hl-bottom { justify-content: center; }
+  }
+  .hl-price {
+    font-size: 20px;
+    font-weight: 800;
+    color: #E8CA7F;
+  }
+  .hl-cta {
+    background: linear-gradient(135deg, #D9B45D, #C19438);
+    color: #181415;
+    border: none;
+    padding: 9px 16px;
+    border-radius: 999px;
+    font-weight: 800;
+    font-size: 12.5px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .hl-cta-sec {
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.3);
+    padding: 8px 14px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 12.5px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .hl-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: 1px solid rgba(255,255,255,0.28);
+    background: rgba(0,0,0,0.35);
+    color: #fff;
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 4;
+  }
+  .hl-prev { left: 10px; }
+  .hl-next { right: 10px; }
+  .hl-dots {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    gap: 6px;
+    z-index: 4;
+  }
+  .hl-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 999px;
+    background: rgba(255,255,255,0.35);
+    border: none;
+    padding: 0;
+    cursor: pointer;
+    transition: width 0.2s, background 0.2s;
+  }
+  .hl-dot.active {
+    width: 22px;
+    background: #E8CA7F;
+  }
 </style>
 </head>
 <body>
@@ -1266,6 +1428,15 @@
       <span class="hero-badge" id="heroBadge1">Free Delivery in Kathmandu Valley</span>
       <span class="hero-badge" id="heroBadge2">Cash &amp; Digital Payment</span>
     </div>
+  </div>
+</section>
+
+<section class="hl-wrap" id="hlWrap">
+  <div class="hl-banner" onmouseenter="pauseHighlight()" onmouseleave="resumeHighlight()">
+    <button class="hl-nav hl-prev" onclick="stepHighlight(-1)" aria-label="Previous">‹</button>
+    <div class="hl-track" id="hlTrack"></div>
+    <button class="hl-nav hl-next" onclick="stepHighlight(1)" aria-label="Next">›</button>
+    <div class="hl-dots" id="hlDots"></div>
   </div>
 </section>
 
@@ -2197,7 +2368,93 @@ document.getElementById("searchInput").addEventListener("input", e => {
   renderGrid();
 });
 
+/* PRODUCT HIGHLIGHT AUTO-SCROLL BANNER */
+let hlItems = [];
+let hlIndex = 0;
+let hlTimer = null;
+
+function renderHighlightBanner() {
+  const track = document.getElementById("hlTrack");
+  const dots = document.getElementById("hlDots");
+  const wrap = document.getElementById("hlWrap");
+  if (!track || !dots) return;
+
+  // Pick up to 8 highlight items (newest + top priced)
+  const pool = [...PRODUCTS].filter(p => p.images && p.images.length);
+  pool.sort((a, b) => (b.is_new ? 1 : 0) - (a.is_new ? 1 : 0) || (b.price || 0) - (a.price || 0));
+  hlItems = pool.slice(0, 8);
+  if (!hlItems.length) {
+    wrap.style.display = "none";
+    return;
+  }
+  wrap.style.display = "block";
+  const t = I18N[currentLang] || I18N.en;
+
+  track.innerHTML = hlItems.map(p => {
+    const priceText = p.price > 0 ? `NPR ${p.price.toLocaleString()}` : t.inquiry;
+    return `
+      <div class="hl-slide">
+        <div class="hl-img-box" onclick="openQuickView('${p.code}')">
+          <img src="${p.images[0]}" alt="${p.name}" onerror="handleImgError(this)" />
+        </div>
+        <div>
+          <span class="hl-eyebrow">${p.is_new ? '★ New Highlight' : '★ Featured Pick'} • ${p.group}</span>
+          <h3 class="hl-title">${p.name}</h3>
+          ${p.nepali_name ? `<div class="hl-nep">${p.nepali_name}</div>` : ""}
+          ${p.daraz_name ? `<p class="hl-desc">${p.daraz_name}</p>` : ""}
+          <div class="hl-bottom">
+            <span class="hl-price">${priceText}</span>
+            <button class="hl-cta" onclick="updateQty('${p.code}', 1)">${t.addBtn}</button>
+            <button class="hl-cta-sec" onclick="openQuickView('${p.code}')">Quick View</button>
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+
+  dots.innerHTML = hlItems.map((_, i) => `
+    <button class="hl-dot ${i === hlIndex ? 'active' : ''}" onclick="goHighlight(${i})" aria-label="Slide ${i + 1}"></button>
+  `).join("");
+
+  hlIndex = Math.min(hlIndex, hlItems.length - 1);
+  updateHighlightPosition();
+  resumeHighlight();
+}
+
+function updateHighlightPosition() {
+  const track = document.getElementById("hlTrack");
+  const dots = document.getElementById("hlDots");
+  if (!track) return;
+  track.style.transform = `translateX(-${hlIndex * 100}%)`;
+  if (dots) {
+    [...dots.children].forEach((d, i) => d.classList.toggle("active", i === hlIndex));
+  }
+}
+
+function stepHighlight(dir) {
+  if (!hlItems.length) return;
+  hlIndex = (hlIndex + dir + hlItems.length) % hlItems.length;
+  updateHighlightPosition();
+}
+
+function goHighlight(idx) {
+  hlIndex = idx;
+  updateHighlightPosition();
+}
+
+function pauseHighlight() {
+  clearInterval(hlTimer);
+  hlTimer = null;
+}
+
+function resumeHighlight() {
+  clearInterval(hlTimer);
+  if (hlItems.length > 1) {
+    hlTimer = setInterval(() => stepHighlight(1), 4000);
+  }
+}
+
 applyLang();
+renderHighlightBanner();
 renderOccasions();
 renderCategories();
 renderGrid();
