@@ -4,6 +4,22 @@
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <title>Sujan Store — Product Catalog</title>
+<meta name="description" content="Shop authentic Nepali ceremonial wear, Annaprasan Jari Malas, Makhmal bags, bridal sets, and cosmetics. Tap photos to zoom and order directly on WhatsApp." />
+<link rel="icon" type="image/png" href="favicon.png" />
+<link rel="apple-touch-icon" href="favicon.png" />
+<link rel="manifest" href="manifest.json" />
+<meta name="theme-color" content="#6B182C" />
+<meta property="og:type" content="website" />
+<meta property="og:title" content="Sujan Store — Official Product Catalog" />
+<meta property="og:description" content="Traditional Ceremonial Wear, Jewelry, Bags &amp; Cosmetics • Free Delivery Inside Kathmandu Valley" />
+<meta property="og:url" content="https://sujanstore.github.io/" />
+<meta property="og:image" content="https://sujanstore.github.io/preview.png" />
+<meta property="og:image:width" content="1200" />
+<meta property="og:image:height" content="630" />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content="Sujan Store — Official Product Catalog" />
+<meta name="twitter:description" content="Traditional Ceremonial Wear, Jewelry, Bags &amp; Cosmetics • Free Delivery Inside Kathmandu Valley" />
+<meta name="twitter:image" content="https://sujanstore.github.io/preview.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -840,6 +856,302 @@
     color: var(--accent);
     background: #FDF8F9;
   }
+
+  /* STICKY CATEGORY BAR & NEW ARRIVALS */
+  .cat-wrap {
+    position: sticky;
+    top: 66px;
+    z-index: 25;
+    background: rgba(250, 248, 245, 0.92);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 10px 16px;
+    margin-top: 12px;
+    border-bottom: 1px solid var(--border);
+  }
+  .cat-bar {
+    max-width: 1168px;
+    margin: 0 auto;
+  }
+  .new-strip {
+    margin-bottom: 22px;
+  }
+  .new-strip-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-bottom: 10px;
+  }
+  .new-strip-head h3 {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 19px;
+    color: var(--accent);
+  }
+  .new-strip-head span {
+    font-size: 12px;
+    color: var(--muted);
+    font-weight: 600;
+  }
+  .new-row {
+    display: flex;
+    gap: 12px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+    scrollbar-width: thin;
+  }
+  .new-mini {
+    flex: 0 0 165px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 14px;
+    overflow: hidden;
+    cursor: pointer;
+    box-shadow: 0 3px 12px rgba(24, 20, 21, 0.04);
+    transition: transform 0.15s ease;
+  }
+  .new-mini:hover { transform: translateY(-2px); }
+  .new-mini-img {
+    height: 128px;
+    background: var(--surface-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px;
+    position: relative;
+  }
+  .new-mini-img img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 8px;
+  }
+  .new-mini-body {
+    padding: 8px 10px 10px;
+  }
+  .new-mini-title {
+    font-size: 12.5px;
+    font-weight: 700;
+    color: var(--text);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  .new-mini-price {
+    font-size: 13px;
+    font-weight: 800;
+    color: var(--accent);
+    margin-top: 2px;
+  }
+  .new-badge {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background: linear-gradient(135deg, #D9B45D, #B9892B);
+    color: #181415;
+    font-size: 9.5px;
+    font-weight: 800;
+    padding: 3px 7px;
+    border-radius: 999px;
+    letter-spacing: 0.5px;
+  }
+
+  /* QUICK-VIEW MODAL */
+  .qv-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(14, 10, 11, 0.68);
+    backdrop-filter: blur(5px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 95;
+    padding: 14px;
+  }
+  .qv-bg.open { display: flex; }
+  .qv-card {
+    background: var(--surface);
+    width: 100%;
+    max-width: 760px;
+    max-height: 92vh;
+    overflow-y: auto;
+    border-radius: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+    position: relative;
+  }
+  @media (max-width: 680px) {
+    .qv-card { grid-template-columns: 1fr; }
+  }
+  .qv-close {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    border: none;
+    background: rgba(255, 255, 255, 0.9);
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    font-size: 18px;
+    cursor: pointer;
+    z-index: 2;
+  }
+  .qv-media {
+    background: var(--surface-soft);
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .qv-stage {
+    position: relative;
+    width: 100%;
+    height: 290px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: zoom-in;
+  }
+  .qv-stage img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 12px;
+  }
+  .qv-thumbs {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .qv-thumbs img {
+    width: 48px;
+    height: 48px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    opacity: 0.7;
+  }
+  .qv-thumbs img.active {
+    border-color: var(--accent);
+    opacity: 1;
+  }
+  .qv-info {
+    padding: 22px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    gap: 14px;
+  }
+  .qv-desc {
+    font-size: 12.5px;
+    line-height: 1.55;
+    color: var(--muted);
+    margin: 8px 0 0;
+  }
+  .qv-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+  }
+  .qv-share {
+    width: 100%;
+    padding: 9px 12px;
+    border-radius: 10px;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    color: var(--text);
+    font-weight: 700;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+
+  /* TRUST & FAQ */
+  .trust-section, .faq-section {
+    max-width: 1200px;
+    margin: 28px auto 0;
+    padding: 0 16px;
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 14px;
+  }
+  @media (max-width: 720px) {
+    .trust-grid { grid-template-columns: 1fr; }
+  }
+  .trust-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    padding: 18px;
+    box-shadow: 0 4px 16px rgba(24, 20, 21, 0.03);
+  }
+  .trust-card h4 {
+    margin: 0 0 6px;
+    font-size: 15px;
+    color: var(--accent);
+  }
+  .trust-card p {
+    margin: 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+  .faq-box {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px 22px;
+  }
+  .faq-box h3 {
+    margin: 0 0 12px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    color: var(--accent);
+  }
+  .faq-box details {
+    border-top: 1px solid var(--border);
+    padding: 11px 0;
+  }
+  .faq-box details:first-of-type { border-top: none; }
+  .faq-box summary {
+    font-weight: 700;
+    font-size: 13.5px;
+    cursor: pointer;
+    color: var(--text);
+  }
+  .faq-box details p {
+    margin: 7px 0 0;
+    font-size: 13px;
+    line-height: 1.55;
+    color: var(--muted);
+  }
+
+  /* FLOATING WHATSAPP CHAT */
+  .wa-float {
+    position: fixed;
+    right: 18px;
+    bottom: 20px;
+    z-index: 38;
+    background: #1B8A4B;
+    color: #fff;
+    text-decoration: none;
+    padding: 11px 16px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 13px;
+    box-shadow: 0 8px 22px rgba(27, 138, 75, 0.35);
+    transition: bottom 0.2s ease, transform 0.15s ease;
+  }
+  .wa-float:hover { transform: translateY(-2px); }
+  .wa-float.lifted { bottom: 82px; }
 </style>
 </head>
 <body>
@@ -892,9 +1204,51 @@
 </div>
 
 <main>
+  <section class="new-strip" id="newStrip" style="display:none;">
+    <div class="new-strip-head">
+      <h3>New Arrivals</h3>
+      <span>Latest additions</span>
+    </div>
+    <div class="new-row" id="newRow"></div>
+  </section>
   <div class="stats-line" id="statsLine"></div>
   <div class="grid" id="productGrid"></div>
 </main>
+
+<section class="trust-section">
+  <div class="trust-grid">
+    <div class="trust-card">
+      <h4>Authentic Craftsmanship</h4>
+      <p>Carefully curated traditional Jari Malas, Makhmal bags, bridal Ghumto, and ceremonial essentials.</p>
+    </div>
+    <div class="trust-card">
+      <h4>Free Kathmandu Delivery</h4>
+      <p>Complimentary delivery inside Kathmandu Valley, with fast nationwide shipping across Nepal.</p>
+    </div>
+    <div class="trust-card">
+      <h4>Bulk &amp; Wedding Orders</h4>
+      <p>Need multiple pieces for weddings, Annaprasan, or Bratabandha? Message us for custom/bulk pricing.</p>
+    </div>
+  </div>
+</section>
+
+<section class="faq-section">
+  <div class="faq-box">
+    <h3>Frequently Asked Questions</h3>
+    <details>
+      <summary>How do I place an order?</summary>
+      <p>Tap <strong>+ Add to Order</strong> on the items you want, choose the number of pieces, click <strong>Review Order</strong>, fill in your contact details, and send your order directly on WhatsApp.</p>
+    </details>
+    <details>
+      <summary>How long does delivery take?</summary>
+      <p>Inside Kathmandu Valley, orders are typically delivered within 24–48 hours (free delivery). Outside-valley courier delivery takes 2–4 working days.</p>
+    </details>
+    <details>
+      <summary>What payment methods are accepted?</summary>
+      <p>We accept Cash on Delivery (COD) inside Kathmandu Valley as well as eSewa, Khalti, Fonepay, and bank transfers.</p>
+    </details>
+  </div>
+</section>
 
 <section class="info-section" id="about-contact">
   <div class="info-grid">
@@ -939,6 +1293,35 @@
 <div class="cart-bar" id="cartBar">
   <div class="summary" id="cartSummary"></div>
   <button onclick="openCheckout()">Review Order →</button>
+</div>
+
+<a class="wa-float" id="waFloat" href="https://wa.me/9779851237839" target="_blank" rel="noopener">💬 Chat on WhatsApp</a>
+
+<!-- QUICK-VIEW MODAL -->
+<div class="qv-bg" id="quickViewModal" onclick="if(event.target===this) closeQuickView()">
+  <div class="qv-card">
+    <button class="qv-close" onclick="closeQuickView()">×</button>
+    <div class="qv-media">
+      <div class="qv-stage" onclick="openLightboxFromQuickView()">
+        <img id="qvMainImg" src="" alt="" />
+      </div>
+      <div class="qv-thumbs" id="qvThumbs"></div>
+    </div>
+    <div class="qv-info">
+      <div>
+        <div class="cat-name" id="qvCat"></div>
+        <h2 style="margin:4px 0 0; font-size:20px; color:var(--text);" id="qvTitle"></h2>
+        <div class="nepali-title" id="qvNepali"></div>
+        <div class="price" style="margin-top:8px; font-size:19px;" id="qvPrice"></div>
+        <div style="font-size:11px; color:var(--muted); margin-top:2px;" id="qvCode"></div>
+        <p class="qv-desc" id="qvDesc"></p>
+      </div>
+      <div class="qv-actions">
+        <div id="qvActionArea"></div>
+        <button class="qv-share" onclick="shareQuickViewProduct()">🔗 Share Product Link</button>
+      </div>
+    </div>
+  </div>
 </div>
 
 <!-- PHOTO LIGHTBOX -->
@@ -992,7 +1375,7 @@
 </div>
 
 <script>
-const INITIAL_PRODUCTS = [{"code": "SS25-061", "name": "Mala 1", "nepali_name": "माला १", "daraz_name": "Premium Handcrafted Annaprasan Jari Mala for Baby Ceremony / Traditional Garland for First Rice Feeding Ritual, Religious Puja & Cultural Celebrations", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 600, "images": ["images/SS25-061_1.jpg", "images/SS25-061_2.jpg", "images/SS25-061_3.jpg", "images/SS25-061_4.jpg"]}, {"code": "SS25-065", "name": "Mala 3", "nepali_name": "माला ३", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 900, "images": ["images/SS25-065_1.jpg", "images/SS25-065_2.jpg", "images/SS25-065_3.jpg"]}, {"code": "SS25-067", "name": "Mala 4", "nepali_name": "माला ४", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 800, "images": ["images/SS25-067_1.jpg", "images/SS25-067_2.jpg", "images/SS25-067_3.jpg"]}, {"code": "SS25-069", "name": "Mala 5", "nepali_name": "माला ५", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1500, "images": ["images/SS25-069_1.jpg", "images/SS25-069_2.jpg", "images/SS25-069_3.jpg", "images/SS25-069_4.jpg"]}, {"code": "SS25-071", "name": "Mala 6", "nepali_name": "माला ६", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 850, "images": ["images/SS25-071_1.jpg", "images/SS25-071_2.jpg", "images/SS25-071_3.jpg", "images/SS25-071_4.jpg"]}, {"code": "SS25-073", "name": "Mala 7", "nepali_name": "माला ७", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 500, "images": ["images/SS25-073_1.jpg", "images/SS25-073_2.jpg", "images/SS25-073_3.jpg", "images/SS25-073_4.jpg"]}, {"code": "SS25-075", "name": "Mala 8", "nepali_name": "माला ८", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 350, "images": ["images/SS25-075_1.jpg", "images/SS25-075_2.jpg", "images/SS25-075_3.jpg", "images/SS25-075_4.jpg"]}, {"code": "SS25-077", "name": "Mala 9", "nepali_name": "माला ९", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 400, "images": ["images/SS25-077_1.jpg", "images/SS25-077_2.jpg", "images/SS25-077_3.jpg"]}, {"code": "SS25-143", "name": "Mala 10", "nepali_name": "माला १०", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1800, "images": ["images/SS25-143_1.jpg", "images/SS25-143_2.jpg", "images/SS25-143_3.jpg", "images/SS25-143_4.jpg"]}, {"code": "SS25-145", "name": "Mala 11", "nepali_name": "माला ११", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2500, "images": ["images/SS25-145_1.jpg", "images/SS25-145_2.jpg", "images/SS25-145_3.jpg", "images/SS25-145_4.jpg"]}, {"code": "SS25-147", "name": "Mala 12", "nepali_name": "माला १२", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-147_1.jpg", "images/SS25-147_2.jpg", "images/SS25-147_3.jpg"]}, {"code": "SS25-149", "name": "Mala 13", "nepali_name": "माला १३", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 700, "images": ["images/SS25-149_1.jpg", "images/SS25-149_2.jpg", "images/SS25-149_3.jpg"]}, {"code": "SS25-151", "name": "Mala 14", "nepali_name": "माला १४", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-151_1.jpg", "images/SS25-151_2.jpg", "images/SS25-151_3.jpg"]}, {"code": "SS25-153", "name": "Mala 15", "nepali_name": "माला १५", "daraz_name": "Jari Mala / Premium Traditional Wedding / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-153_1.jpg", "images/SS25-153_2.jpg", "images/SS25-153_3.jpg"]}, {"code": "SS25-155", "name": "Mala 16", "nepali_name": "माला १६", "daraz_name": "Jari Mala / Premium Traditional Wedding / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 700, "images": ["images/SS25-155_1.jpg", "images/SS25-155_2.jpg", "images/SS25-155_3.jpg"]}, {"code": "SS25-227", "name": "Mala 17", "nepali_name": "माला १७", "daraz_name": "Premium Traditional Wedding Dubo Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-227_1.jpg", "images/SS25-227_2.jpg", "images/SS25-227_3.jpg", "images/SS25-227_4.jpg"]}, {"code": "SS25-259", "name": "Annaprasan Jari Malla", "nepali_name": "अन्नप्राशन जरी माला", "daraz_name": "Pasni (Annaprashan), Parties, and Traditional Ceremonies/ Traditional Garland for Child / Elegant Handwoven Mala / Premium Handcrafted Annaprasan Jari Mala for Baby Ceremony / Traditional Garland for First Rice Feeding Ritual, Religious Puja & Cultural C", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1000, "images": ["images/SS25-259_1.jpg", "images/SS25-259_2.jpg", "images/SS25-259_3.jpg", "images/SS25-259_4.jpg"]}, {"code": "SS25-261", "name": "Annaprasan Jari Malla", "nepali_name": "अन्नप्राशन जरी माला", "daraz_name": "Pasni (Annaprashan), Cultural Naming Ceremonies, Traditional Baby Welcoming Events, and Religious Festivities / Handcrafted Annaprasan Jari Mala for Baby Ceremony / Traditional Garland for First Rice Feeding Ritual, Religious Puja & Cultural Celeb", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1000, "images": ["images/SS25-261_1.jpg", "images/SS25-261_2.jpg", "images/SS25-261_3.jpg", "images/SS25-261_4.jpg"]}, {"code": "SS25-263", "name": "Jari Malla with stone", "nepali_name": "पत्थर जडित जरी माला", "daraz_name": "Premium Traditional Wedding Handcrafted Jari Mala / Weddings, Festive Celebrations, Parties, and Traditional Ceremonies / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1500, "images": ["images/SS25-263_1.jpg", "images/SS25-263_2.jpg", "images/SS25-263_3.jpg", "images/SS25-263_4.jpg"]}, {"code": "SS25-025", "name": "Bag 1", "nepali_name": "ब्याग १", "daraz_name": "Luxury Golden Silk Handbag for Women – Premium Embellished Potli | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Royal Bead & Pearl Work Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-025_1.jpg", "images/SS25-025_2.jpg", "images/SS25-025_3.jpg", "images/SS25-025_4.jpg"]}, {"code": "SS25-027", "name": "Bag 2", "nepali_name": "ब्याग २", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Golden Bead Embellished Potli / Handbag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-027_1.jpg", "images/SS25-027_2.jpg", "images/SS25-027_3.jpg"]}, {"code": "SS25-029", "name": "Bag 3", "nepali_name": "ब्याग ३", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Beaded & Pearl Embroidered Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-029_1.jpg", "images/SS25-029_2.jpg", "images/SS25-029_3.jpg"]}, {"code": "SS25-031", "name": "Bag 4", "nepali_name": "ब्याग ४", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Tassel Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-031_1.jpg", "images/SS25-031_2.jpg", "images/SS25-031_3.jpg"]}, {"code": "SS25-033", "name": "Bag 5", "nepali_name": "ब्याग ५", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Potli Bag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-033_1.jpg", "images/SS25-033_2.jpg", "images/SS25-033_3.jpg"]}, {"code": "SS25-035", "name": "Bag 6", "nepali_name": "ब्याग ६", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Potli Bag / Handbag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-035_1.jpg", "images/SS25-035_2.jpg", "images/SS25-035_3.jpg"]}, {"code": "SS25-037", "name": "Bag 7", "nepali_name": "ब्याग ७", "daraz_name": "Luxury Red Velvet Handbag for Women – Embellished Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Jewel Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-037_1.jpg", "images/SS25-037_2.jpg", "images/SS25-037_3.jpg"]}, {"code": "SS25-039", "name": "Bag 8", "nepali_name": "ब्याग ८", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Stone & Pearl Work Potli Bag / Ethnic Heritage Collection", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-039_1.jpg", "images/SS25-039_2.jpg", "images/SS25-039_3.jpg"]}, {"code": "SS25-041", "name": "Bag 9", "nepali_name": "ब्याग ९", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Potli / Bag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-041_1.jpg", "images/SS25-041_2.jpg", "images/SS25-041_3.jpg"]}, {"code": "SS25-043", "name": "Bag 10", "nepali_name": "ब्याग १०", "daraz_name": "Luxury Potli Bag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Beaded Pearl & Gold Embossed Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-043_1.jpg", "images/SS25-043_2.jpg", "images/SS25-043_3.jpg"]}, {"code": "SS25-045", "name": "Bag 11", "nepali_name": "ब्याग ११", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Emerald Green Beaded Potli with Pearl Tassels / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-045_1.jpg", "images/SS25-045_2.jpg", "images/SS25-045_3.jpg"]}, {"code": "SS25-047", "name": "Bag 12", "nepali_name": "ब्याग १२", "daraz_name": "Luxury Yellow Silk Handbag for Women – Premium Embroidered Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Golden Bead & Pearl Embellished Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-047_1.jpg", "images/SS25-047_2.jpg", "images/SS25-047_3.jpg"]}, {"code": "SS25-101", "name": "Bag 13", "nepali_name": "ब्याग १३", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Maroon Mirror Embroidered Potli Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 500, "images": ["images/SS25-101_1.jpg", "images/SS25-101_2.jpg", "images/SS25-101_3.jpg"]}, {"code": "SS25-103", "name": "Bag 14", "nepali_name": "ब्याग १४", "daraz_name": "Luxury Velvet Potli Bag for Women – Premium Red Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag with Mirror & Beads | Traditional Potli Bag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 500, "images": ["images/SS25-103_1.jpg", "images/SS25-103_2.jpg", "images/SS25-103_3.jpg"]}, {"code": "SS25-173", "name": "Bag 17", "nepali_name": "ब्याग १७", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Ethnic Grace Velvet Collection | White / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-173_1.jpg", "images/SS25-173_2.jpg", "images/SS25-173_3.jpg", "images/SS25-173_4.jpg"]}, {"code": "SS25-175", "name": "Bag 18", "nepali_name": "ब्याग १८", "daraz_name": "Luxury Makhmali Handbag – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Elegant Empress Velvet Handbag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-175_1.jpg", "images/SS25-175_2.jpg", "images/SS25-175_3.jpg", "images/SS25-175_4.jpg"]}, {"code": "SS25-177", "name": "Bag 19", "nepali_name": "ब्याग १९", "daraz_name": "Luxury Makhmali Handbag – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Gift of Grace Handbag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-177_1.jpg", "images/SS25-177_2.jpg", "images/SS25-177_3.jpg", "images/SS25-177_4.jpg"]}, {"code": "SS25-179", "name": "Bag 20", "nepali_name": "ब्याग २०", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Velvet Love Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-179_1.jpg", "images/SS25-179_2.jpg", "images/SS25-179_3.jpg", "images/SS25-179_4.jpg"]}, {"code": "SS25-229", "name": "Bag 21", "nepali_name": "ब्याग २१", "daraz_name": "Luxury Makhmali Handbag – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Gift of Grace Handbag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-229_1.jpg", "images/SS25-229_2.jpg", "images/SS25-229_3.jpg", "images/SS25-229_4.jpg"]}, {"code": "SS25-231", "name": "Bag 22", "nepali_name": "ब्याग २२", "daraz_name": "Velvet Royale Handbag – Luxury Makhmali Clutch | Bridal, Party & Occasion Wear | Elegant Handcrafted Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-231_1.jpg", "images/SS25-231_2.jpg", "images/SS25-231_3.jpg", "images/SS25-231_4.jpg"]}, {"code": "SS25-233", "name": "Bag 23", "nepali_name": "ब्याग २३", "daraz_name": "Opulent Velvet Handbag – Luxury Makhmali Clutch | Ethnic Festive Collection | Handcrafted Elegance | Festive, Party & Bridal Wear / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-233_1.jpg", "images/SS25-233_2.jpg", "images/SS25-233_3.jpg", "images/SS25-233_4.jpg"]}, {"code": "SS25-235", "name": "Bag 24", "nepali_name": "ब्याग २४", "daraz_name": "Heritage Velvet Clutch – Premium Makhmali Handbag | Ethnic Wedding Collection | Classic Designer Bag | Pink | Handcrafted Ethnic Style / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-235_1.jpg", "images/SS25-235_2.jpg", "images/SS25-235_3.jpg", "images/SS25-235_4.jpg"]}, {"code": "SS25-237", "name": "Bag 25", "nepali_name": "ब्याग २५", "daraz_name": "Makhmali Handbag - Premium Velvet Potli Clutch | Wedding & Festive Special | Ethnic Designer Bag | Wedding, Party & Special Occasion Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-237_1.jpg", "images/SS25-237_2.jpg", "images/SS25-237_3.jpg", "images/SS25-237_4.jpg"]}, {"code": "SS25-253", "name": "Bag 26", "nepali_name": "ब्याग २६", "daraz_name": "Red Embroidered Potli Bag with Golden Beads & Pearl Work | Bridal Party Potli Bag – Red Embroidered Handbag with Gold Beads | 2. Premium Red Beaded Potli Handbag with Golden Embroidery & Pearl Fringe |", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 2000, "images": ["images/SS25-253_1.jpg", "images/SS25-253_2.jpg", "images/SS25-253_3.jpg", "images/SS25-253_4.jpg"]}, {"code": "SS25-265", "name": "Makhmal Bag 27", "nepali_name": "मखमली ब्याग २७", "daraz_name": "Luxury Golden Pearl Embellished Potli Bag for Women | Elegant Embroidered Wedding Handbag / Designer Golden Ethnic Potli Bag | Pearl & Bead Work Traditional Wedding Party Handbag / Designer Ethnic Handbag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 2000, "images": ["images/SS25-265_1.jpg", "images/SS25-265_2.jpg", "images/SS25-265_3.jpg", "images/SS25-265_4.jpg"]}, {"code": "SS25-267", "name": "Makhmal Bag 28", "nepali_name": "मखमली ब्याग २८", "daraz_name": "Luxury Red Pearl Embellished Potli Bag for Women | Floral Embroidered Ethnic Wedding & Party Wear Handbag / Perfect for Weddings & Festive Occasions / Premium Pearl & Bead Embellishments", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 2000, "images": ["images/SS25-267_1.jpg", "images/SS25-267_2.jpg", "images/SS25-267_3.jpg", "images/SS25-267_4.jpg"]}, {"code": "SS25-271", "name": "Makhmali Bag 29", "nepali_name": "मखमली ब्याग २९", "daraz_name": "Luxury Velvet Handbag for Women – Premium Embellished Potli | Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl, Bead & Golden Tassel Work Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-271_1.jpg", "images/SS25-271_2.jpg", "images/SS25-271_3.jpg", "images/SS25-271_4.jpg"]}, {"code": "SS25-013", "name": "Ghumto 1", "nepali_name": "घुम्टो १", "daraz_name": "Elegant Red Bridal Ghumto for Wedding / Traditional Bride Veil Dupatta for Marriage Ceremony, Engagement, Reception & Cultural Celebrations", "group": "Ghumto", "section": "Nariwol & Bridal Sets", "price": 700, "images": ["images/SS25-013_1.jpg", "images/SS25-013_2.jpg", "images/SS25-013_3.jpg", "images/SS25-013_4.jpg"]}, {"code": "SS25-016", "name": "Ghumto 2", "nepali_name": "घुम्टो २", "daraz_name": "Elegant Red Bridal Ghumto for Wedding / Traditional Bride Veil Dupatta for Marriage Ceremony, Engagement, Reception & Cultural Celebrations", "group": "Ghumto", "section": "Nariwol & Bridal Sets", "price": 1000, "images": ["images/SS25-016_1.jpg", "images/SS25-016_2.jpg", "images/SS25-016_3.jpg", "images/SS25-016_4.jpg"]}, {"code": "SS25-139", "name": "Nariwol Set 1", "nepali_name": "नरिवल सेट १", "daraz_name": "Nariwal Supari Set for Wedding & Engagement / Decorative Coconut & Betel Nut Set for Marriage Ceremony, Sagun, Puja & Traditional Rituals", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 2500, "images": ["images/SS25-139_1.jpg", "images/SS25-139_2.jpg", "images/SS25-139_3.jpg", "images/SS25-139_4.jpg"]}, {"code": "SS25-141", "name": "Nariwol Set 2", "nepali_name": "नरिवल सेट २", "daraz_name": "Nariwal Supari Set for Wedding & Engagement / Decorative Coconut & Betel Nut Set for Marriage Ceremony, Sagun, Puja & Traditional Rituals / Decorative Misri", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 2500, "images": ["images/SS25-141_1.jpg", "images/SS25-141_2.jpg", "images/SS25-141_3.jpg", "images/SS25-141_4.jpg"]}, {"code": "SS25-159", "name": "Nariwol Set 4", "nepali_name": "नरिवल सेट ४", "daraz_name": "Nariwal Supari Set for Wedding & Engagement / Decorative Coconut & Betel Nut Set for Marriage Ceremony, Sagun, Puja & Traditional Rituals / Decorative Misri / Velvet Padded Kalash", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 1500, "images": ["images/SS25-159_1.jpg", "images/SS25-159_2.jpg", "images/SS25-159_3.jpg", "images/SS25-159_4.jpg"]}, {"code": "SS25-255", "name": "Nariwol Set 5", "nepali_name": "नरिवल सेट ५", "daraz_name": "Premium Nepali Wedding Shubh Vivah Tray & Drape-Style Decorated Coconut (Nariwal) Set - Red Velvet Sagun Platter with Supari & Sindoor Holders for Engagement & Marriage / Nepali Marriage Sagun Platter / Swayambar Thali", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 1600, "images": ["images/SS25-255_1.jpg", "images/SS25-255_2.jpg", "images/SS25-255_3.jpg"]}, {"code": "SS25-257", "name": "Nariwol Set 6", "nepali_name": "नरिवल सेट ६", "daraz_name": "Premium Traditional Nepali \"Shubh Vivah\" Wedding Sagun Tray & Pointed-Drape Nariwal Set - Red Velvet & Gold Handmade Puja Platter/Thali for Marriage, Swayambar & Engagement ceremonies. (शुभ विवाह सगुन थाल सेट) /Exclusive Pointed-Drape Coconuts (Nariwal)", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 2000, "images": ["images/SS25-257_1.jpg", "images/SS25-257_2.jpg", "images/SS25-257_3.jpg"]}, {"code": "SS25-269", "name": "Ganesh Ghumto", "nepali_name": "गणेश घुम्टो", "daraz_name": "Exclusive Ganesh Embroidered Bridal Ghumto for Wedding / Red Traditional Bride Veil Dupatta for Marriage Ceremony, Engagement, Reception & Cultural Celebrations", "group": "Ghumto", "section": "Nariwol & Bridal Sets", "price": 1500, "images": ["images/SS25-269_1.jpg", "images/SS25-269_2.jpg", "images/SS25-269_3.jpg", "images/SS25-269_4.jpg"]}, {"code": "SS25-009", "name": "Simple Dhago 5", "nepali_name": "साधारण धागो ५", "daraz_name": "Lachha Dori | Dhago | Traditional Red & Gold Decorative Sachika | Handmade Multi-color Sequin & Bead Work | Sacred Hindu Worship Thread | Festive Wrist Bracelet for Women & Girls | Religious Accessory for Pooja & Rituals", "group": "Dhago", "section": "Traditional Dhago", "price": 225, "images": ["images/SS25-009_1.jpg", "images/SS25-009_2.jpg", "images/SS25-009_3.jpg"]}, {"code": "SS25-239", "name": "Simple Dhago 11", "nepali_name": "साधारण धागो ११", "daraz_name": "Lachha Dori | Dhago | Soft Cotton Lachha Dori Rope | Premium Twisted Cotton Dori | Traditional Sachika | Handmade Cotton | Shrawan Holy Green Thread | Decorative Cotton Cord", "group": "Dhago", "section": "Traditional Dhago", "price": 350, "images": ["images/SS25-239_1.jpg", "images/SS25-239_2.jpg", "images/SS25-239_3.jpg", "images/SS25-239_4.jpg"]}, {"code": "SS25-241", "name": "Simple Dhago 12", "nepali_name": "साधारण धागो १२", "daraz_name": "Premium Quality Decorative Lachha Dori | Perfect for fashion and craft | Premium Quality Multipurpose Lachha Dori | Shrawan Lachha Dori for Girls | Traditional Festival Wrist Thread", "group": "Dhago", "section": "Traditional Dhago", "price": 330, "images": ["images/SS25-241_1.jpg", "images/SS25-241_2.jpg", "images/SS25-241_3.jpg", "images/SS25-241_4.jpg"]}, {"code": "SS25-243", "name": "Simple Dhago 13", "nepali_name": "साधारण धागो १३", "daraz_name": "Traditional Festival Lachha Dori for Women & Girls | Shrawan Special Multicolor | Handmade Shrawan Lachha Dori | Lucky Festival Thread for Girls | Traditional Festival Wrist Thread | Fashionable Lachha Dori Wrist Band for Shrawan Festival & Daily Wear", "group": "Dhago", "section": "Traditional Dhago", "price": 450, "images": ["images/SS25-243_1.jpg", "images/SS25-243_2.jpg", "images/SS25-243_3.jpg", "images/SS25-243_4.jpg"]}, {"code": "SS25-245", "name": "Simple Dhago 14", "nepali_name": "साधारण धागो १४", "daraz_name": "Lachha Dori | Dhago | Premium Shrawan Green Wrist Thread | Traditional Sachika | Handmade Cotton | Religious Wrist Thread | Sacred Hindu Worship Thread | Shrawan Holy Green Thread", "group": "Dhago", "section": "Traditional Dhago", "price": 225, "images": ["images/SS25-245_1.jpg", "images/SS25-245_2.jpg", "images/SS25-245_3.jpg", "images/SS25-245_4.jpg"]}, {"code": "SS25-247", "name": "Simple Dhago 15", "nepali_name": "साधारण धागो १५", "daraz_name": "Lachha Dori | Dhago | Traditional Green Lachha Dori for Shrawan | Sacred Hindu Worship Thread | Shrawan Special Green Lachha Dori (Sachika) | Sacred Hindu Religious Thread | Cotton Wrist Bracelet for Women and Girls", "group": "Dhago", "section": "Traditional Dhago", "price": 225, "images": ["images/SS25-247_1.jpg", "images/SS25-247_2.jpg", "images/SS25-247_3.jpg", "images/SS25-247_4.jpg"]}, {"code": "SS25-251", "name": "Natthi 1", "nepali_name": "नत्थी १", "daraz_name": "Traditional Nepali Short Naththi (नथ्थी) with Multicolor Beaded Decorative Hair Accessory | Colorful Beads | Traditional Religious & Festival Naththi | Red, Green & golden beads for Puja, Ceremony & Cultural Events | Hair Accessories", "group": "Natthi", "section": "Bangles & Traditional Jewelry", "price": 300, "images": ["images/SS25-251_1.jpg", "images/SS25-251_2.jpg", "images/SS25-251_3.jpg", "images/SS25-251_4.jpg"]}, {"code": "SS25-049", "name": "Sindur Chopne 1", "nepali_name": "सिन्दूर चोप्ने १", "daraz_name": "Sindoor Chopne (सिन्दूर चोप्ने) / Traditional Nepali Marriage / Nepali Makhamali / Handcraft / Head Cover", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-049_1.jpg", "images/SS25-049_2.jpg", "images/SS25-049_3.jpg"]}, {"code": "SS25-051", "name": "Sindur Chopne 2", "nepali_name": "सिन्दूर चोप्ने २", "daraz_name": "Sindoor Chopne (सिन्दूर चोप्ने) / Traditional Nepali Marriage / Nepali Makhamali / Handcraft / Head Cover", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-051_1.jpg", "images/SS25-051_2.jpg", "images/SS25-051_3.jpg", "images/SS25-051_4.jpg"]}, {"code": "SS25-053", "name": "Sindur Chopne 3", "nepali_name": "सिन्दूर चोप्ने ३", "daraz_name": "Sindoor Chopne (सिन्दूर चोप्ने) / Traditional Nepali Marriage / Nepali Makhamali / Handcraft / Head Cover", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-053_1.jpg", "images/SS25-053_2.jpg", "images/SS25-053_3.jpg", "images/SS25-053_4.jpg"]}, {"code": "SS25-181", "name": "Ala 1", "nepali_name": "आला १", "daraz_name": "Taral Alta – Traditional Newari Cultural Red Liquid Alta for Hands & Feet | Bhaitika | Wedding | Festivals | Festival & Wedding Essential Alta – Red Liquid | Hand & Foot Red Color", "group": "Ala", "section": "Ceremonial Essentials", "price": 200, "images": ["images/SS25-181_1.jpg", "images/SS25-181_2.jpg", "images/SS25-181_3.jpg", "images/SS25-181_4.jpg"]}, {"code": "SS25-183", "name": "Saptarangi Tika 1", "nepali_name": "सप्तरङ्गी टीका १", "daraz_name": "Saptarangi Bhaitika Set | 11 Rangi Tika Set for Bhaitika – Complete Bhai Tika Puja Set with Akshyata, Diyo & Garland | Traditional Tihar Special | Celebrate Bhai Tika with Love | Tihar", "group": "Saptarangi Tika", "section": "Ceremonial Essentials", "price": 280, "images": ["images/SS25-183_1.jpg", "images/SS25-183_2.jpg", "images/SS25-183_3.jpg", "images/SS25-183_4.jpg"]}, {"code": "SS25-279", "name": "Sindur Chopne 6", "nepali_name": "सिन्दूर चोप्ने ६", "daraz_name": "", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-279_1.jpg", "images/SS25-279_2.jpg", "images/SS25-279_3.jpg", "images/SS25-279_4.jpg"]}, {"code": "SS25-279", "name": "Sindur Chopne 7", "nepali_name": "सिन्दूर चोप्ने ७", "daraz_name": "", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-279_1.jpg", "images/SS25-279_2.jpg", "images/SS25-279_3.jpg", "images/SS25-279_4.jpg"]}, {"code": "SS25-281", "name": "Sindur Chopne 8", "nepali_name": "सिन्दूर चोप्ने ८", "daraz_name": "", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-281_1.jpg", "images/SS25-281_2.jpg", "images/SS25-281_3.jpg", "images/SS25-281_4.jpg"]}, {"code": "SS25-273", "name": "Makhmal Shoes with Heel", "nepali_name": "मखमली हिल जुत्ता", "daraz_name": "New Sujan Elegant Red Bridal Shoes for Wedding / Traditional Nepali Footwear for Marriage Ceremony & Engagement | Floral Embellished Velvet Jutti with High Heel", "group": "Shoes", "section": "Footwear", "price": 1700, "images": ["images/SS25-273_1.jpg", "images/SS25-273_2.jpg", "images/SS25-273_3.jpg", "images/SS25-273_4.jpg"]}, {"code": "SS25-275", "name": "Makhmal Shoes with Medium Heel", "nepali_name": "मखमली मध्यम हिल जुत्ता", "daraz_name": "Premium Red Velvet Shoes for Wedding / Bride Ethnic Footwear with Golden Starburst Embroidery for Puja, Festival & Cultural Celebrations | Elegant Medium Heel Jutti", "group": "Shoes", "section": "Footwear", "price": 1000, "images": ["images/SS25-275_1.jpg", "images/SS25-275_2.jpg", "images/SS25-275_3.jpg", "images/SS25-275_4.jpg"]}, {"code": "SS25-277", "name": "Makhmal Shoes with low Heel", "nepali_name": "मखमली कम हिल जुत्ता", "daraz_name": "Classy Red Velvet Slip-on Shoes for Women / Traditional Ethnic Footwear with Golden Paisley Embroidery for Puja, Wedding & Festivals | Comfortable Low Heel Jutti", "group": "Shoes", "section": "Footwear", "price": 700, "images": ["images/SS25-277_1.jpg", "images/SS25-277_2.jpg", "images/SS25-277_3.jpg", "images/SS25-277_4.jpg"]}];
+const INITIAL_PRODUCTS = [{"code": "SS25-061", "name": "Mala 1", "nepali_name": "माला १", "daraz_name": "Premium Handcrafted Annaprasan Jari Mala for Baby Ceremony / Traditional Garland for First Rice Feeding Ritual, Religious Puja & Cultural Celebrations", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 600, "images": ["images/SS25-061_1.jpg", "images/SS25-061_2.jpg", "images/SS25-061_3.jpg", "images/SS25-061_4.jpg"], "is_new": false}, {"code": "SS25-065", "name": "Mala 3", "nepali_name": "माला ३", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 900, "images": ["images/SS25-065_1.jpg", "images/SS25-065_2.jpg", "images/SS25-065_3.jpg"], "is_new": false}, {"code": "SS25-067", "name": "Mala 4", "nepali_name": "माला ४", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 800, "images": ["images/SS25-067_1.jpg", "images/SS25-067_2.jpg", "images/SS25-067_3.jpg"], "is_new": false}, {"code": "SS25-069", "name": "Mala 5", "nepali_name": "माला ५", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1500, "images": ["images/SS25-069_1.jpg", "images/SS25-069_2.jpg", "images/SS25-069_3.jpg", "images/SS25-069_4.jpg"], "is_new": false}, {"code": "SS25-071", "name": "Mala 6", "nepali_name": "माला ६", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 850, "images": ["images/SS25-071_1.jpg", "images/SS25-071_2.jpg", "images/SS25-071_3.jpg", "images/SS25-071_4.jpg"], "is_new": false}, {"code": "SS25-073", "name": "Mala 7", "nepali_name": "माला ७", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 500, "images": ["images/SS25-073_1.jpg", "images/SS25-073_2.jpg", "images/SS25-073_3.jpg", "images/SS25-073_4.jpg"], "is_new": false}, {"code": "SS25-075", "name": "Mala 8", "nepali_name": "माला ८", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 350, "images": ["images/SS25-075_1.jpg", "images/SS25-075_2.jpg", "images/SS25-075_3.jpg", "images/SS25-075_4.jpg"], "is_new": false}, {"code": "SS25-077", "name": "Mala 9", "nepali_name": "माला ९", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 400, "images": ["images/SS25-077_1.jpg", "images/SS25-077_2.jpg", "images/SS25-077_3.jpg"], "is_new": false}, {"code": "SS25-143", "name": "Mala 10", "nepali_name": "माला १०", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1800, "images": ["images/SS25-143_1.jpg", "images/SS25-143_2.jpg", "images/SS25-143_3.jpg", "images/SS25-143_4.jpg"], "is_new": false}, {"code": "SS25-145", "name": "Mala 11", "nepali_name": "माला ११", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2500, "images": ["images/SS25-145_1.jpg", "images/SS25-145_2.jpg", "images/SS25-145_3.jpg", "images/SS25-145_4.jpg"], "is_new": false}, {"code": "SS25-147", "name": "Mala 12", "nepali_name": "माला १२", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-147_1.jpg", "images/SS25-147_2.jpg", "images/SS25-147_3.jpg"], "is_new": false}, {"code": "SS25-149", "name": "Mala 13", "nepali_name": "माला १३", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 700, "images": ["images/SS25-149_1.jpg", "images/SS25-149_2.jpg", "images/SS25-149_3.jpg"], "is_new": false}, {"code": "SS25-151", "name": "Mala 14", "nepali_name": "माला १४", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-151_1.jpg", "images/SS25-151_2.jpg", "images/SS25-151_3.jpg"], "is_new": false}, {"code": "SS25-153", "name": "Mala 15", "nepali_name": "माला १५", "daraz_name": "Jari Mala / Premium Traditional Wedding / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-153_1.jpg", "images/SS25-153_2.jpg", "images/SS25-153_3.jpg"], "is_new": false}, {"code": "SS25-155", "name": "Mala 16", "nepali_name": "माला १६", "daraz_name": "Jari Mala / Premium Traditional Wedding / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 700, "images": ["images/SS25-155_1.jpg", "images/SS25-155_2.jpg", "images/SS25-155_3.jpg"], "is_new": false}, {"code": "SS25-227", "name": "Mala 17", "nepali_name": "माला १७", "daraz_name": "Premium Traditional Wedding Dubo Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-227_1.jpg", "images/SS25-227_2.jpg", "images/SS25-227_3.jpg", "images/SS25-227_4.jpg"], "is_new": false}, {"code": "SS25-259", "name": "Annaprasan Jari Malla", "nepali_name": "अन्नप्राशन जरी माला", "daraz_name": "Pasni (Annaprashan), Parties, and Traditional Ceremonies/ Traditional Garland for Child / Elegant Handwoven Mala / Premium Handcrafted Annaprasan Jari Mala for Baby Ceremony / Traditional Garland for First Rice Feeding Ritual, Religious Puja & Cultural C", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1000, "images": ["images/SS25-259_1.jpg", "images/SS25-259_2.jpg", "images/SS25-259_3.jpg", "images/SS25-259_4.jpg"], "is_new": false}, {"code": "SS25-261", "name": "Annaprasan Jari Malla", "nepali_name": "अन्नप्राशन जरी माला", "daraz_name": "Pasni (Annaprashan), Cultural Naming Ceremonies, Traditional Baby Welcoming Events, and Religious Festivities / Handcrafted Annaprasan Jari Mala for Baby Ceremony / Traditional Garland for First Rice Feeding Ritual, Religious Puja & Cultural Celeb", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1000, "images": ["images/SS25-261_1.jpg", "images/SS25-261_2.jpg", "images/SS25-261_3.jpg", "images/SS25-261_4.jpg"], "is_new": false}, {"code": "SS25-263", "name": "Jari Malla with stone", "nepali_name": "पत्थर जडित जरी माला", "daraz_name": "Premium Traditional Wedding Handcrafted Jari Mala / Weddings, Festive Celebrations, Parties, and Traditional Ceremonies / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1500, "images": ["images/SS25-263_1.jpg", "images/SS25-263_2.jpg", "images/SS25-263_3.jpg", "images/SS25-263_4.jpg"], "is_new": false}, {"code": "SS25-025", "name": "Bag 1", "nepali_name": "ब्याग १", "daraz_name": "Luxury Golden Silk Handbag for Women – Premium Embellished Potli | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Royal Bead & Pearl Work Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-025_1.jpg", "images/SS25-025_2.jpg", "images/SS25-025_3.jpg", "images/SS25-025_4.jpg"], "is_new": false}, {"code": "SS25-027", "name": "Bag 2", "nepali_name": "ब्याग २", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Golden Bead Embellished Potli / Handbag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-027_1.jpg", "images/SS25-027_2.jpg", "images/SS25-027_3.jpg"], "is_new": false}, {"code": "SS25-029", "name": "Bag 3", "nepali_name": "ब्याग ३", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Beaded & Pearl Embroidered Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-029_1.jpg", "images/SS25-029_2.jpg", "images/SS25-029_3.jpg"], "is_new": false}, {"code": "SS25-031", "name": "Bag 4", "nepali_name": "ब्याग ४", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Tassel Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-031_1.jpg", "images/SS25-031_2.jpg", "images/SS25-031_3.jpg"], "is_new": false}, {"code": "SS25-033", "name": "Bag 5", "nepali_name": "ब्याग ५", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Potli Bag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-033_1.jpg", "images/SS25-033_2.jpg", "images/SS25-033_3.jpg"], "is_new": false}, {"code": "SS25-035", "name": "Bag 6", "nepali_name": "ब्याग ६", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Potli Bag / Handbag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-035_1.jpg", "images/SS25-035_2.jpg", "images/SS25-035_3.jpg"], "is_new": false}, {"code": "SS25-037", "name": "Bag 7", "nepali_name": "ब्याग ७", "daraz_name": "Luxury Red Velvet Handbag for Women – Embellished Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Jewel Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-037_1.jpg", "images/SS25-037_2.jpg", "images/SS25-037_3.jpg"], "is_new": false}, {"code": "SS25-039", "name": "Bag 8", "nepali_name": "ब्याग ८", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Stone & Pearl Work Potli Bag / Ethnic Heritage Collection", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-039_1.jpg", "images/SS25-039_2.jpg", "images/SS25-039_3.jpg"], "is_new": false}, {"code": "SS25-041", "name": "Bag 9", "nepali_name": "ब्याग ९", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Potli / Bag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-041_1.jpg", "images/SS25-041_2.jpg", "images/SS25-041_3.jpg"], "is_new": false}, {"code": "SS25-043", "name": "Bag 10", "nepali_name": "ब्याग १०", "daraz_name": "Luxury Potli Bag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Beaded Pearl & Gold Embossed Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-043_1.jpg", "images/SS25-043_2.jpg", "images/SS25-043_3.jpg"], "is_new": false}, {"code": "SS25-045", "name": "Bag 11", "nepali_name": "ब्याग ११", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Emerald Green Beaded Potli with Pearl Tassels / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-045_1.jpg", "images/SS25-045_2.jpg", "images/SS25-045_3.jpg"], "is_new": false}, {"code": "SS25-047", "name": "Bag 12", "nepali_name": "ब्याग १२", "daraz_name": "Luxury Yellow Silk Handbag for Women – Premium Embroidered Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Golden Bead & Pearl Embellished Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-047_1.jpg", "images/SS25-047_2.jpg", "images/SS25-047_3.jpg"], "is_new": false}, {"code": "SS25-101", "name": "Bag 13", "nepali_name": "ब्याग १३", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Maroon Mirror Embroidered Potli Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 500, "images": ["images/SS25-101_1.jpg", "images/SS25-101_2.jpg", "images/SS25-101_3.jpg"], "is_new": false}, {"code": "SS25-103", "name": "Bag 14", "nepali_name": "ब्याग १४", "daraz_name": "Luxury Velvet Potli Bag for Women – Premium Red Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag with Mirror & Beads | Traditional Potli Bag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 500, "images": ["images/SS25-103_1.jpg", "images/SS25-103_2.jpg", "images/SS25-103_3.jpg"], "is_new": false}, {"code": "SS25-173", "name": "Bag 17", "nepali_name": "ब्याग १७", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Ethnic Grace Velvet Collection | White / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-173_1.jpg", "images/SS25-173_2.jpg", "images/SS25-173_3.jpg", "images/SS25-173_4.jpg"], "is_new": false}, {"code": "SS25-175", "name": "Bag 18", "nepali_name": "ब्याग १८", "daraz_name": "Luxury Makhmali Handbag – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Elegant Empress Velvet Handbag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-175_1.jpg", "images/SS25-175_2.jpg", "images/SS25-175_3.jpg", "images/SS25-175_4.jpg"], "is_new": false}, {"code": "SS25-177", "name": "Bag 19", "nepali_name": "ब्याग १९", "daraz_name": "Luxury Makhmali Handbag – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Gift of Grace Handbag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-177_1.jpg", "images/SS25-177_2.jpg", "images/SS25-177_3.jpg", "images/SS25-177_4.jpg"], "is_new": false}, {"code": "SS25-179", "name": "Bag 20", "nepali_name": "ब्याग २०", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Velvet Love Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-179_1.jpg", "images/SS25-179_2.jpg", "images/SS25-179_3.jpg", "images/SS25-179_4.jpg"], "is_new": false}, {"code": "SS25-229", "name": "Bag 21", "nepali_name": "ब्याग २१", "daraz_name": "Luxury Makhmali Handbag – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Gift of Grace Handbag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-229_1.jpg", "images/SS25-229_2.jpg", "images/SS25-229_3.jpg", "images/SS25-229_4.jpg"], "is_new": false}, {"code": "SS25-231", "name": "Bag 22", "nepali_name": "ब्याग २२", "daraz_name": "Velvet Royale Handbag – Luxury Makhmali Clutch | Bridal, Party & Occasion Wear | Elegant Handcrafted Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-231_1.jpg", "images/SS25-231_2.jpg", "images/SS25-231_3.jpg", "images/SS25-231_4.jpg"], "is_new": false}, {"code": "SS25-233", "name": "Bag 23", "nepali_name": "ब्याग २३", "daraz_name": "Opulent Velvet Handbag – Luxury Makhmali Clutch | Ethnic Festive Collection | Handcrafted Elegance | Festive, Party & Bridal Wear / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-233_1.jpg", "images/SS25-233_2.jpg", "images/SS25-233_3.jpg", "images/SS25-233_4.jpg"], "is_new": false}, {"code": "SS25-235", "name": "Bag 24", "nepali_name": "ब्याग २४", "daraz_name": "Heritage Velvet Clutch – Premium Makhmali Handbag | Ethnic Wedding Collection | Classic Designer Bag | Pink | Handcrafted Ethnic Style / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-235_1.jpg", "images/SS25-235_2.jpg", "images/SS25-235_3.jpg", "images/SS25-235_4.jpg"], "is_new": false}, {"code": "SS25-237", "name": "Bag 25", "nepali_name": "ब्याग २५", "daraz_name": "Makhmali Handbag - Premium Velvet Potli Clutch | Wedding & Festive Special | Ethnic Designer Bag | Wedding, Party & Special Occasion Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-237_1.jpg", "images/SS25-237_2.jpg", "images/SS25-237_3.jpg", "images/SS25-237_4.jpg"], "is_new": false}, {"code": "SS25-253", "name": "Bag 26", "nepali_name": "ब्याग २६", "daraz_name": "Red Embroidered Potli Bag with Golden Beads & Pearl Work | Bridal Party Potli Bag – Red Embroidered Handbag with Gold Beads | 2. Premium Red Beaded Potli Handbag with Golden Embroidery & Pearl Fringe |", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 2000, "images": ["images/SS25-253_1.jpg", "images/SS25-253_2.jpg", "images/SS25-253_3.jpg", "images/SS25-253_4.jpg"], "is_new": false}, {"code": "SS25-265", "name": "Makhmal Bag 27", "nepali_name": "मखमली ब्याग २७", "daraz_name": "Luxury Golden Pearl Embellished Potli Bag for Women | Elegant Embroidered Wedding Handbag / Designer Golden Ethnic Potli Bag | Pearl & Bead Work Traditional Wedding Party Handbag / Designer Ethnic Handbag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 2000, "images": ["images/SS25-265_1.jpg", "images/SS25-265_2.jpg", "images/SS25-265_3.jpg", "images/SS25-265_4.jpg"], "is_new": false}, {"code": "SS25-267", "name": "Makhmal Bag 28", "nepali_name": "मखमली ब्याग २८", "daraz_name": "Luxury Red Pearl Embellished Potli Bag for Women | Floral Embroidered Ethnic Wedding & Party Wear Handbag / Perfect for Weddings & Festive Occasions / Premium Pearl & Bead Embellishments", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 2000, "images": ["images/SS25-267_1.jpg", "images/SS25-267_2.jpg", "images/SS25-267_3.jpg", "images/SS25-267_4.jpg"], "is_new": false}, {"code": "SS25-271", "name": "Makhmali Bag 29", "nepali_name": "मखमली ब्याग २९", "daraz_name": "Luxury Velvet Handbag for Women – Premium Embellished Potli | Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl, Bead & Golden Tassel Work Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-271_1.jpg", "images/SS25-271_2.jpg", "images/SS25-271_3.jpg", "images/SS25-271_4.jpg"], "is_new": true}, {"code": "SS25-013", "name": "Ghumto 1", "nepali_name": "घुम्टो १", "daraz_name": "Elegant Red Bridal Ghumto for Wedding / Traditional Bride Veil Dupatta for Marriage Ceremony, Engagement, Reception & Cultural Celebrations", "group": "Ghumto", "section": "Nariwol & Bridal Sets", "price": 700, "images": ["images/SS25-013_1.jpg", "images/SS25-013_2.jpg", "images/SS25-013_3.jpg", "images/SS25-013_4.jpg"], "is_new": false}, {"code": "SS25-016", "name": "Ghumto 2", "nepali_name": "घुम्टो २", "daraz_name": "Elegant Red Bridal Ghumto for Wedding / Traditional Bride Veil Dupatta for Marriage Ceremony, Engagement, Reception & Cultural Celebrations", "group": "Ghumto", "section": "Nariwol & Bridal Sets", "price": 1000, "images": ["images/SS25-016_1.jpg", "images/SS25-016_2.jpg", "images/SS25-016_3.jpg", "images/SS25-016_4.jpg"], "is_new": false}, {"code": "SS25-139", "name": "Nariwol Set 1", "nepali_name": "नरिवल सेट १", "daraz_name": "Nariwal Supari Set for Wedding & Engagement / Decorative Coconut & Betel Nut Set for Marriage Ceremony, Sagun, Puja & Traditional Rituals", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 2500, "images": ["images/SS25-139_1.jpg", "images/SS25-139_2.jpg", "images/SS25-139_3.jpg", "images/SS25-139_4.jpg"], "is_new": false}, {"code": "SS25-141", "name": "Nariwol Set 2", "nepali_name": "नरिवल सेट २", "daraz_name": "Nariwal Supari Set for Wedding & Engagement / Decorative Coconut & Betel Nut Set for Marriage Ceremony, Sagun, Puja & Traditional Rituals / Decorative Misri", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 2500, "images": ["images/SS25-141_1.jpg", "images/SS25-141_2.jpg", "images/SS25-141_3.jpg", "images/SS25-141_4.jpg"], "is_new": false}, {"code": "SS25-159", "name": "Nariwol Set 4", "nepali_name": "नरिवल सेट ४", "daraz_name": "Nariwal Supari Set for Wedding & Engagement / Decorative Coconut & Betel Nut Set for Marriage Ceremony, Sagun, Puja & Traditional Rituals / Decorative Misri / Velvet Padded Kalash", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 1500, "images": ["images/SS25-159_1.jpg", "images/SS25-159_2.jpg", "images/SS25-159_3.jpg", "images/SS25-159_4.jpg"], "is_new": false}, {"code": "SS25-255", "name": "Nariwol Set 5", "nepali_name": "नरिवल सेट ५", "daraz_name": "Premium Nepali Wedding Shubh Vivah Tray & Drape-Style Decorated Coconut (Nariwal) Set - Red Velvet Sagun Platter with Supari & Sindoor Holders for Engagement & Marriage / Nepali Marriage Sagun Platter / Swayambar Thali", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 1600, "images": ["images/SS25-255_1.jpg", "images/SS25-255_2.jpg", "images/SS25-255_3.jpg"], "is_new": false}, {"code": "SS25-257", "name": "Nariwol Set 6", "nepali_name": "नरिवल सेट ६", "daraz_name": "Premium Traditional Nepali \"Shubh Vivah\" Wedding Sagun Tray & Pointed-Drape Nariwal Set - Red Velvet & Gold Handmade Puja Platter/Thali for Marriage, Swayambar & Engagement ceremonies. (शुभ विवाह सगुन थाल सेट) /Exclusive Pointed-Drape Coconuts (Nariwal)", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 2000, "images": ["images/SS25-257_1.jpg", "images/SS25-257_2.jpg", "images/SS25-257_3.jpg"], "is_new": false}, {"code": "SS25-269", "name": "Ganesh Ghumto", "nepali_name": "गणेश घुम्टो", "daraz_name": "Exclusive Ganesh Embroidered Bridal Ghumto for Wedding / Red Traditional Bride Veil Dupatta for Marriage Ceremony, Engagement, Reception & Cultural Celebrations", "group": "Ghumto", "section": "Nariwol & Bridal Sets", "price": 1500, "images": ["images/SS25-269_1.jpg", "images/SS25-269_2.jpg", "images/SS25-269_3.jpg", "images/SS25-269_4.jpg"], "is_new": true}, {"code": "SS25-009", "name": "Simple Dhago 5", "nepali_name": "साधारण धागो ५", "daraz_name": "Lachha Dori | Dhago | Traditional Red & Gold Decorative Sachika | Handmade Multi-color Sequin & Bead Work | Sacred Hindu Worship Thread | Festive Wrist Bracelet for Women & Girls | Religious Accessory for Pooja & Rituals", "group": "Dhago", "section": "Traditional Dhago", "price": 225, "images": ["images/SS25-009_1.jpg", "images/SS25-009_2.jpg", "images/SS25-009_3.jpg"], "is_new": false}, {"code": "SS25-239", "name": "Simple Dhago 11", "nepali_name": "साधारण धागो ११", "daraz_name": "Lachha Dori | Dhago | Soft Cotton Lachha Dori Rope | Premium Twisted Cotton Dori | Traditional Sachika | Handmade Cotton | Shrawan Holy Green Thread | Decorative Cotton Cord", "group": "Dhago", "section": "Traditional Dhago", "price": 350, "images": ["images/SS25-239_1.jpg", "images/SS25-239_2.jpg", "images/SS25-239_3.jpg", "images/SS25-239_4.jpg"], "is_new": false}, {"code": "SS25-241", "name": "Simple Dhago 12", "nepali_name": "साधारण धागो १२", "daraz_name": "Premium Quality Decorative Lachha Dori | Perfect for fashion and craft | Premium Quality Multipurpose Lachha Dori | Shrawan Lachha Dori for Girls | Traditional Festival Wrist Thread", "group": "Dhago", "section": "Traditional Dhago", "price": 330, "images": ["images/SS25-241_1.jpg", "images/SS25-241_2.jpg", "images/SS25-241_3.jpg", "images/SS25-241_4.jpg"], "is_new": false}, {"code": "SS25-243", "name": "Simple Dhago 13", "nepali_name": "साधारण धागो १३", "daraz_name": "Traditional Festival Lachha Dori for Women & Girls | Shrawan Special Multicolor | Handmade Shrawan Lachha Dori | Lucky Festival Thread for Girls | Traditional Festival Wrist Thread | Fashionable Lachha Dori Wrist Band for Shrawan Festival & Daily Wear", "group": "Dhago", "section": "Traditional Dhago", "price": 450, "images": ["images/SS25-243_1.jpg", "images/SS25-243_2.jpg", "images/SS25-243_3.jpg", "images/SS25-243_4.jpg"], "is_new": false}, {"code": "SS25-245", "name": "Simple Dhago 14", "nepali_name": "साधारण धागो १४", "daraz_name": "Lachha Dori | Dhago | Premium Shrawan Green Wrist Thread | Traditional Sachika | Handmade Cotton | Religious Wrist Thread | Sacred Hindu Worship Thread | Shrawan Holy Green Thread", "group": "Dhago", "section": "Traditional Dhago", "price": 225, "images": ["images/SS25-245_1.jpg", "images/SS25-245_2.jpg", "images/SS25-245_3.jpg", "images/SS25-245_4.jpg"], "is_new": false}, {"code": "SS25-247", "name": "Simple Dhago 15", "nepali_name": "साधारण धागो १५", "daraz_name": "Lachha Dori | Dhago | Traditional Green Lachha Dori for Shrawan | Sacred Hindu Worship Thread | Shrawan Special Green Lachha Dori (Sachika) | Sacred Hindu Religious Thread | Cotton Wrist Bracelet for Women and Girls", "group": "Dhago", "section": "Traditional Dhago", "price": 225, "images": ["images/SS25-247_1.jpg", "images/SS25-247_2.jpg", "images/SS25-247_3.jpg", "images/SS25-247_4.jpg"], "is_new": false}, {"code": "SS25-251", "name": "Natthi 1", "nepali_name": "नत्थी १", "daraz_name": "Traditional Nepali Short Naththi (नथ्थी) with Multicolor Beaded Decorative Hair Accessory | Colorful Beads | Traditional Religious & Festival Naththi | Red, Green & golden beads for Puja, Ceremony & Cultural Events | Hair Accessories", "group": "Natthi", "section": "Bangles & Traditional Jewelry", "price": 300, "images": ["images/SS25-251_1.jpg", "images/SS25-251_2.jpg", "images/SS25-251_3.jpg", "images/SS25-251_4.jpg"], "is_new": false}, {"code": "SS25-049", "name": "Sindur Chopne 1", "nepali_name": "सिन्दूर चोप्ने १", "daraz_name": "Sindoor Chopne (सिन्दूर चोप्ने) / Traditional Nepali Marriage / Nepali Makhamali / Handcraft / Head Cover", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-049_1.jpg", "images/SS25-049_2.jpg", "images/SS25-049_3.jpg"], "is_new": false}, {"code": "SS25-051", "name": "Sindur Chopne 2", "nepali_name": "सिन्दूर चोप्ने २", "daraz_name": "Sindoor Chopne (सिन्दूर चोप्ने) / Traditional Nepali Marriage / Nepali Makhamali / Handcraft / Head Cover", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-051_1.jpg", "images/SS25-051_2.jpg", "images/SS25-051_3.jpg", "images/SS25-051_4.jpg"], "is_new": false}, {"code": "SS25-053", "name": "Sindur Chopne 3", "nepali_name": "सिन्दूर चोप्ने ३", "daraz_name": "Sindoor Chopne (सिन्दूर चोप्ने) / Traditional Nepali Marriage / Nepali Makhamali / Handcraft / Head Cover", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-053_1.jpg", "images/SS25-053_2.jpg", "images/SS25-053_3.jpg", "images/SS25-053_4.jpg"], "is_new": false}, {"code": "SS25-181", "name": "Ala 1", "nepali_name": "आला १", "daraz_name": "Taral Alta – Traditional Newari Cultural Red Liquid Alta for Hands & Feet | Bhaitika | Wedding | Festivals | Festival & Wedding Essential Alta – Red Liquid | Hand & Foot Red Color", "group": "Ala", "section": "Ceremonial Essentials", "price": 200, "images": ["images/SS25-181_1.jpg", "images/SS25-181_2.jpg", "images/SS25-181_3.jpg", "images/SS25-181_4.jpg"], "is_new": false}, {"code": "SS25-183", "name": "Saptarangi Tika 1", "nepali_name": "सप्तरङ्गी टीका १", "daraz_name": "Saptarangi Bhaitika Set | 11 Rangi Tika Set for Bhaitika – Complete Bhai Tika Puja Set with Akshyata, Diyo & Garland | Traditional Tihar Special | Celebrate Bhai Tika with Love | Tihar", "group": "Saptarangi Tika", "section": "Ceremonial Essentials", "price": 280, "images": ["images/SS25-183_1.jpg", "images/SS25-183_2.jpg", "images/SS25-183_3.jpg", "images/SS25-183_4.jpg"], "is_new": false}, {"code": "SS25-279", "name": "Sindur Chopne 6", "nepali_name": "सिन्दूर चोप्ने ६", "daraz_name": "", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-279_1.jpg", "images/SS25-279_2.jpg", "images/SS25-279_3.jpg", "images/SS25-279_4.jpg"], "is_new": true}, {"code": "SS25-281", "name": "Sindur Chopne 7", "nepali_name": "सिन्दूर चोप्ने ७", "daraz_name": "", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-281_1.jpg", "images/SS25-281_2.jpg", "images/SS25-281_3.jpg", "images/SS25-281_4.jpg"], "is_new": true}, {"code": "SS25-283", "name": "Sindur Chopne 8", "nepali_name": "सिन्दूर चोप्ने ८", "daraz_name": "", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-283_1.jpg", "images/SS25-283_2.jpg", "images/SS25-283_3.jpg", "images/SS25-283_4.jpg"], "is_new": true}, {"code": "SS25-273", "name": "Makhmal Shoes with Heel", "nepali_name": "मखमली हिल जुत्ता", "daraz_name": "New Sujan Elegant Red Bridal Shoes for Wedding / Traditional Nepali Footwear for Marriage Ceremony & Engagement | Floral Embellished Velvet Jutti with High Heel", "group": "Shoes", "section": "Footwear", "price": 1700, "images": ["images/SS25-273_1.jpg", "images/SS25-273_2.jpg", "images/SS25-273_3.jpg", "images/SS25-273_4.jpg"], "is_new": true}, {"code": "SS25-275", "name": "Makhmal Shoes with Medium Heel", "nepali_name": "मखमली मध्यम हिल जुत्ता", "daraz_name": "Premium Red Velvet Shoes for Wedding / Bride Ethnic Footwear with Golden Starburst Embroidery for Puja, Festival & Cultural Celebrations | Elegant Medium Heel Jutti", "group": "Shoes", "section": "Footwear", "price": 1000, "images": ["images/SS25-275_1.jpg", "images/SS25-275_2.jpg", "images/SS25-275_3.jpg", "images/SS25-275_4.jpg"], "is_new": true}, {"code": "SS25-277", "name": "Makhmal Shoes with low Heel", "nepali_name": "मखमली कम हिल जुत्ता", "daraz_name": "Classy Red Velvet Slip-on Shoes for Women / Traditional Ethnic Footwear with Golden Paisley Embroidery for Puja, Wedding & Festivals | Comfortable Low Heel Jutti", "group": "Shoes", "section": "Footwear", "price": 700, "images": ["images/SS25-277_1.jpg", "images/SS25-277_2.jpg", "images/SS25-277_3.jpg", "images/SS25-277_4.jpg"], "is_new": true}];
 let PRODUCTS = [...INITIAL_PRODUCTS];
 let SECTIONS = ["Ceremonial Mala & Garlands", "Bags & Makhmal Clutches", "Nariwol & Bridal Sets", "Traditional Dhago", "Bangles & Traditional Jewelry", "Ceremonial Essentials", "Footwear"];
 const WHATSAPP_NUMBER = "9779851237839";
@@ -1201,7 +1584,34 @@ function swapCardThumb(code, idx) {
   }
 }
 
+function renderNewArrivals() {
+  const strip = document.getElementById("newStrip");
+  const row = document.getElementById("newRow");
+  const show = activeSection === "All" && !searchTerm.trim();
+  const newItems = PRODUCTS.filter(p => p.is_new);
+  if (!show || !newItems.length) {
+    strip.style.display = "none";
+    return;
+  }
+  strip.style.display = "block";
+  row.innerHTML = newItems.map(p => {
+    const priceText = p.price > 0 ? `NPR ${p.price.toLocaleString()}` : "Inquiry";
+    return `
+      <div class="new-mini" onclick="openQuickView('${p.code}')">
+        <div class="new-mini-img">
+          <img src="${p.images[0]}" alt="${p.name}" loading="lazy" onerror="handleImgError(this)" />
+          <span class="new-badge">NEW</span>
+        </div>
+        <div class="new-mini-body">
+          <div class="new-mini-title">${p.name}</div>
+          <div class="new-mini-price">${priceText}</div>
+        </div>
+      </div>`;
+  }).join("");
+}
+
 function renderGrid() {
+  renderNewArrivals();
   const list = getFiltered();
   document.getElementById("statsLine").textContent = `Showing ${list.length} of ${PRODUCTS.length} available products`;
   const grid = document.getElementById("productGrid");
@@ -1210,6 +1620,7 @@ function renderGrid() {
     const curIdx = activeCardImg[p.code] || 0;
     const qty = cart[p.code] || 0;
     const priceText = p.price > 0 ? `NPR ${p.price.toLocaleString()}` : "Price on Inquiry";
+    const newTag = p.is_new ? `<span class="new-badge">NEW</span>` : "";
     const thumbsHtml = p.images.length > 1 ? `
       <div class="thumbs" id="thumbs-${p.code}">
         ${p.images.map((src, i) => `
@@ -1227,14 +1638,15 @@ function renderGrid() {
 
     return `
       <div class="card">
-        <div class="img-wrap" onclick="openLightbox('${p.code}')">
+        <div class="img-wrap" onclick="openQuickView('${p.code}')">
           <img id="main-${p.code}" class="main-photo" src="${p.images[curIdx]}" alt="${p.name}" loading="lazy" onerror="handleImgError(this)" />
           <span class="sku-tag">${p.code}</span>
-          <span class="zoom-btn" title="Zoom">🔍</span>
+          ${newTag}
+          <span class="zoom-btn" title="Quick View &amp; Zoom">🔍</span>
         </div>
         ${thumbsHtml}
         <div class="card-body">
-          <div>
+          <div style="cursor:pointer;" onclick="openQuickView('${p.code}')">
             <div class="cat-name">${p.group}</div>
             <div class="pdt-title">${p.name}</div>
             ${p.nepali_name ? `<div class="nepali-title">${p.nepali_name}</div>` : ""}
@@ -1253,6 +1665,9 @@ function updateQty(code, delta) {
   else cart[code] = next;
   renderGrid();
   renderCartBar();
+  if (qvProduct && qvProduct.code === code && document.getElementById("quickViewModal").classList.contains("open")) {
+    renderQuickViewAction();
+  }
   if (document.getElementById("checkoutModal").classList.contains("open")) {
     renderCheckoutItems();
   }
@@ -1261,8 +1676,10 @@ function updateQty(code, delta) {
 function renderCartBar() {
   const entries = Object.entries(cart);
   const bar = document.getElementById("cartBar");
+  const waFloat = document.getElementById("waFloat");
   if (!entries.length) {
     bar.classList.remove("show");
+    if (waFloat) waFloat.classList.remove("lifted");
     return;
   }
   let totalPcs = 0;
@@ -1275,6 +1692,71 @@ function renderCartBar() {
   document.getElementById("cartSummary").innerHTML =
     `<strong>${entries.length} product${entries.length > 1 ? 's' : ''} (${totalPcs} pcs)</strong> • Est. NPR ${totalNpr.toLocaleString()}`;
   bar.classList.add("show");
+  if (waFloat) waFloat.classList.add("lifted");
+}
+
+/* QUICK-VIEW */
+let qvProduct = null;
+let qvImgIdx = 0;
+
+function openQuickView(code) {
+  qvProduct = PRODUCTS.find(p => p.code === code);
+  if (!qvProduct) return;
+  qvImgIdx = activeCardImg[code] || 0;
+  document.getElementById("qvCat").textContent = qvProduct.group;
+  document.getElementById("qvTitle").textContent = qvProduct.name;
+  document.getElementById("qvNepali").textContent = qvProduct.nepali_name || "";
+  document.getElementById("qvPrice").textContent = qvProduct.price > 0 ? `NPR ${qvProduct.price.toLocaleString()}` : "Price on Inquiry";
+  document.getElementById("qvCode").textContent = `Product Code: ${qvProduct.code}`;
+  document.getElementById("qvDesc").textContent = qvProduct.daraz_name || "";
+  updateQuickViewMedia();
+  renderQuickViewAction();
+  document.getElementById("quickViewModal").classList.add("open");
+}
+function closeQuickView() {
+  document.getElementById("quickViewModal").classList.remove("open");
+}
+function updateQuickViewMedia() {
+  const img = document.getElementById("qvMainImg");
+  img.dataset.triedFb = "";
+  img.src = qvProduct.images[qvImgIdx];
+  document.getElementById("qvThumbs").innerHTML = qvProduct.images.map((src, i) => `
+    <img src="${src}" class="${i === qvImgIdx ? 'active' : ''}" onclick="qvImgIdx=${i}; updateQuickViewMedia();" />
+  `).join("");
+}
+function renderQuickViewAction() {
+  if (!qvProduct) return;
+  const qty = cart[qvProduct.code] || 0;
+  const area = document.getElementById("qvActionArea");
+  area.innerHTML = qty > 0 ? `
+    <div class="qty-box">
+      <button onclick="updateQty('${qvProduct.code}', -1)">−</button>
+      <span>${qty} pcs in order</span>
+      <button onclick="updateQty('${qvProduct.code}', 1)">+</button>
+    </div>` : `
+    <button class="add-btn" onclick="updateQty('${qvProduct.code}', 1)">+ Add to Order</button>`;
+}
+function openLightboxFromQuickView() {
+  if (!qvProduct) return;
+  lbProduct = qvProduct;
+  lbIndex = qvImgIdx;
+  updateLightbox();
+  document.getElementById("lightbox").classList.add("open");
+}
+function shareQuickViewProduct() {
+  if (!qvProduct) return;
+  const base = window.location.href.split("?")[0].split("#")[0];
+  const shareUrl = `${base}?item=${encodeURIComponent(qvProduct.code)}`;
+  if (navigator.share) {
+    navigator.share({
+      title: `${qvProduct.name} — Sujan Store`,
+      text: `Check out ${qvProduct.name} (${qvProduct.code}) at Sujan Store`,
+      url: shareUrl,
+    }).catch(() => {});
+  } else {
+    navigator.clipboard?.writeText(shareUrl);
+    showToast(`Product link copied for ${qvProduct.code}!`);
+  }
 }
 
 /* LIGHTBOX */
@@ -1510,6 +1992,10 @@ document.getElementById("searchInput").addEventListener("input", e => {
 renderCategories();
 renderGrid();
 syncCatalogWithLiveSheet();
+const itemParam = new URLSearchParams(window.location.search).get("item");
+if (itemParam) {
+  openQuickView(itemParam.trim());
+}
 </script>
 </body>
 </html>
