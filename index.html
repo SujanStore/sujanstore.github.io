@@ -1,0 +1,1515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Sujan Store — Product Catalog</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --bg: #FAF8F5;
+    --surface: #FFFFFF;
+    --surface-soft: #F5F1EB;
+    --accent: #6B182C;
+    --accent-dark: #490E1C;
+    --gold: #C9A24D;
+    --text: #181415;
+    --muted: #71696A;
+    --border: #EAE4DC;
+    --radius: 16px;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: "Plus Jakarta Sans", "Segoe UI", system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    padding-bottom: 96px;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* STICKY GLASS HEADER */
+  header {
+    position: sticky;
+    top: 0;
+    z-index: 30;
+    background: rgba(250, 248, 245, 0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid var(--border);
+    padding: 12px 16px;
+  }
+  .header-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    justify-content: space-between;
+    flex-wrap: wrap;
+  }
+  .brand {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+  }
+  .brand-logo-wrap {
+    width: 42px;
+    height: 42px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 5px;
+    box-shadow: 0 4px 12px rgba(107, 24, 44, 0.22);
+  }
+  .brand-logo-wrap img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+  .brand h1 {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    font-weight: 700;
+    letter-spacing: 0.4px;
+    color: var(--text);
+  }
+  .brand small {
+    display: block;
+    font-size: 11.5px;
+    color: var(--muted);
+    font-weight: 500;
+  }
+  .header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex: 1;
+    justify-content: flex-end;
+    min-width: 220px;
+  }
+  .search-wrap {
+    position: relative;
+    flex: 1;
+    max-width: 340px;
+  }
+  .search-wrap svg {
+    position: absolute;
+    left: 13px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 16px;
+    height: 16px;
+    color: var(--muted);
+    pointer-events: none;
+  }
+  .search-wrap input {
+    width: 100%;
+    padding: 10px 14px 10px 38px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 13.5px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s, box-shadow 0.15s;
+  }
+  .search-wrap input:focus {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 3px rgba(107, 24, 44, 0.1);
+  }
+  .sort-select {
+    padding: 10px 12px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 12.5px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    outline: none;
+  }
+  .nav-links {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .nav-btn {
+    padding: 9px 13px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--text);
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: none;
+    white-space: nowrap;
+    transition: all 0.15s ease;
+  }
+  .nav-btn:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .nav-btn.primary {
+    background: var(--accent);
+    border-color: var(--accent);
+    color: #fff;
+  }
+  .nav-btn.primary:hover {
+    background: var(--accent-dark);
+    color: #fff;
+  }
+
+  /* HERO BANNER */
+  .hero {
+    max-width: 1200px;
+    margin: 16px auto 0;
+    padding: 0 16px;
+  }
+  .hero-card {
+    background: linear-gradient(125deg, #531121 0%, #2D0711 100%);
+    color: #fff;
+    border-radius: 20px;
+    padding: 22px 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 18px;
+    flex-wrap: wrap;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 12px 30px rgba(45, 7, 17, 0.16);
+  }
+  .hero-card::after {
+    content: "";
+    position: absolute;
+    right: -40px;
+    top: -40px;
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    background: radial-gradient(circle, rgba(201, 162, 77, 0.25) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .hero-eyebrow {
+    display: inline-block;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+    text-transform: uppercase;
+    color: #E8CA7F;
+    margin-bottom: 6px;
+  }
+  .hero-card h2 {
+    margin: 0 0 6px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 700;
+    line-height: 1.2;
+  }
+  .hero-card p {
+    margin: 0;
+    font-size: 13.5px;
+    color: rgba(255, 255, 255, 0.82);
+    max-width: 540px;
+  }
+  .hero-badges {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .hero-badge {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(232, 202, 127, 0.35);
+    padding: 7px 12px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: #F7E8C4;
+    white-space: nowrap;
+  }
+
+  /* CATEGORY PILLS */
+  .cat-wrap {
+    max-width: 1200px;
+    margin: 16px auto 0;
+    padding: 0 16px;
+  }
+  .cat-bar {
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+  }
+  .cat-bar::-webkit-scrollbar { display: none; }
+  .cat-pill {
+    white-space: nowrap;
+    padding: 8px 15px;
+    border-radius: 999px;
+    border: 1px solid var(--border);
+    background: var(--surface);
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 600;
+    font-family: inherit;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+  .cat-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .cat-pill.active {
+    background: var(--accent);
+    color: #fff;
+    border-color: var(--accent);
+    box-shadow: 0 4px 12px rgba(107, 24, 44, 0.22);
+  }
+
+  /* PRODUCT GRID */
+  main {
+    max-width: 1200px;
+    margin: 16px auto;
+    padding: 0 16px;
+  }
+  .stats-line {
+    font-size: 13px;
+    color: var(--muted);
+    margin-bottom: 14px;
+    font-weight: 500;
+  }
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
+    gap: 16px;
+  }
+  @media (max-width: 560px) {
+    .grid { grid-template-columns: repeat(2, 1fr); gap: 11px; }
+  }
+
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 4px 18px rgba(24, 20, 21, 0.04);
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+  }
+  .card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 26px rgba(24, 20, 21, 0.08);
+  }
+  .img-wrap {
+    position: relative;
+    aspect-ratio: 1 / 1;
+    background: var(--surface-soft);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    cursor: zoom-in;
+    overflow: hidden;
+  }
+  .img-wrap img.main-photo {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 10px;
+    transition: transform 0.25s ease;
+  }
+  .card:hover .img-wrap img.main-photo {
+    transform: scale(1.03);
+  }
+  .sku-tag {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+    background: rgba(24, 20, 21, 0.72);
+    backdrop-filter: blur(6px);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 700;
+    padding: 4px 8px;
+    border-radius: 8px;
+    letter-spacing: 0.3px;
+  }
+  .zoom-btn {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.9);
+    color: var(--text);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.12);
+    pointer-events: none;
+    font-size: 13px;
+  }
+  .thumbs {
+    display: flex;
+    gap: 6px;
+    padding: 8px 12px 0;
+  }
+  .thumbs img {
+    width: 40px;
+    height: 40px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    background: var(--surface-soft);
+    cursor: pointer;
+    opacity: 0.75;
+    transition: all 0.15s;
+  }
+  .thumbs img.active, .thumbs img:hover {
+    border-color: var(--accent);
+    opacity: 1;
+  }
+  .card-body {
+    padding: 12px 14px 14px;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .cat-name {
+    font-size: 10.5px;
+    text-transform: uppercase;
+    letter-spacing: 0.9px;
+    color: #9A742E;
+    font-weight: 700;
+  }
+  .pdt-title {
+    font-size: 14.5px;
+    font-weight: 700;
+    line-height: 1.32;
+    margin-top: 3px;
+    color: var(--text);
+  }
+  .nepali-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    line-height: 1.35;
+    margin-top: 2px;
+  }
+  .daraz-title {
+    font-size: 11.5px;
+    color: var(--muted);
+    line-height: 1.38;
+    margin-top: 4px;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .price-row {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    margin-top: 6px;
+  }
+  .price {
+    font-size: 16px;
+    font-weight: 800;
+    color: var(--accent);
+  }
+  .add-btn {
+    width: 100%;
+    padding: 10px 12px;
+    border: none;
+    border-radius: 10px;
+    background: var(--accent);
+    color: #fff;
+    font-weight: 700;
+    font-size: 13px;
+    font-family: inherit;
+    cursor: pointer;
+    transition: background 0.15s, transform 0.1s;
+  }
+  .add-btn:hover { background: var(--accent-dark); }
+  .add-btn:active { transform: scale(0.98); }
+  .qty-box {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border: 1.5px solid var(--accent);
+    background: #FDF8F9;
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .qty-box button {
+    width: 40px;
+    height: 36px;
+    border: none;
+    background: transparent;
+    color: var(--accent);
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+  }
+  .qty-box button:hover { background: rgba(107, 24, 44, 0.08); }
+  .qty-box span {
+    font-weight: 800;
+    font-size: 13.5px;
+    color: var(--accent);
+  }
+
+  /* FLOATING CART BAR */
+  .cart-bar {
+    position: fixed;
+    bottom: 16px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: calc(100% - 24px);
+    max-width: 640px;
+    background: rgba(24, 20, 21, 0.94);
+    backdrop-filter: blur(14px);
+    color: #fff;
+    border: 1px solid rgba(201, 162, 77, 0.45);
+    border-radius: 16px;
+    padding: 12px 16px;
+    display: none;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 40;
+    box-shadow: 0 14px 36px rgba(0,0,0,0.28);
+  }
+  .cart-bar.show { display: flex; }
+  .cart-bar .summary { font-size: 13.5px; }
+  .cart-bar .summary strong { font-size: 15px; color: #E8CA7F; }
+  .cart-bar button {
+    background: linear-gradient(135deg, #D9B45D, #C19438);
+    color: #181415;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 13.5px;
+    font-family: inherit;
+    cursor: pointer;
+    white-space: nowrap;
+  }
+
+  /* LIGHTBOX */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(14, 10, 11, 0.94);
+    backdrop-filter: blur(8px);
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    padding: 16px;
+  }
+  .lightbox.open { display: flex; }
+  .lb-close {
+    position: absolute;
+    top: 16px;
+    right: 18px;
+    background: rgba(255,255,255,0.14);
+    color: #fff;
+    border: none;
+    width: 42px;
+    height: 42px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .lb-stage {
+    position: relative;
+    max-width: 94vw;
+    max-height: 72vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lb-stage img {
+    max-width: 90vw;
+    max-height: 70vh;
+    object-fit: contain;
+    border-radius: 14px;
+    background: #fff;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.45);
+  }
+  .lb-nav {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background: rgba(24,20,21,0.72);
+    color: #fff;
+    border: 1px solid rgba(255,255,255,0.25);
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    font-size: 22px;
+    cursor: pointer;
+  }
+  .lb-prev { left: 10px; }
+  .lb-next { right: 10px; }
+  .lb-caption {
+    color: #F4DFB0;
+    margin-top: 12px;
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
+  }
+  .lb-thumbs {
+    display: flex;
+    gap: 8px;
+    margin-top: 10px;
+  }
+  .lb-thumbs img {
+    width: 54px;
+    height: 54px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 2px solid transparent;
+    cursor: pointer;
+    opacity: 0.6;
+  }
+  .lb-thumbs img.active {
+    border-color: var(--gold);
+    opacity: 1;
+  }
+
+  /* CHECKOUT MODAL */
+  .modal-bg {
+    position: fixed;
+    inset: 0;
+    background: rgba(14, 10, 11, 0.65);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 90;
+    padding: 14px;
+  }
+  .modal-bg.open { display: flex; }
+  .modal {
+    background: #fff;
+    width: 100%;
+    max-width: 540px;
+    max-height: 90vh;
+    overflow-y: auto;
+    border-radius: 18px;
+    padding: 22px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.3);
+  }
+  .modal-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 12px;
+    margin-bottom: 14px;
+  }
+  .modal-head h2 {
+    margin: 0;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    color: var(--accent);
+  }
+  .modal-close {
+    border: none;
+    background: var(--surface-soft);
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    font-size: 18px;
+    cursor: pointer;
+  }
+  .order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px dashed var(--border);
+    gap: 10px;
+    font-size: 13.5px;
+  }
+  .oi-left {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .oi-left img {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border-radius: 8px;
+    border: 1px solid var(--border);
+  }
+  .order-item .oi-ctrl {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .order-item .oi-ctrl button {
+    width: 28px;
+    height: 28px;
+    border: 1px solid var(--border);
+    background: var(--surface-soft);
+    border-radius: 7px;
+    cursor: pointer;
+    font-weight: 700;
+  }
+  .total-line {
+    display: flex;
+    justify-content: space-between;
+    font-size: 17px;
+    font-weight: 800;
+    color: var(--accent);
+    margin: 14px 0 18px;
+    padding-top: 4px;
+  }
+  .form-group { margin-bottom: 12px; }
+  .form-group label {
+    display: block;
+    font-size: 12.5px;
+    font-weight: 700;
+    margin-bottom: 5px;
+    color: var(--text);
+  }
+  .form-group input, .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #DCD4CA;
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+  }
+  .form-group input:focus, .form-group textarea:focus {
+    border-color: var(--accent);
+  }
+  .btn-row {
+    display: flex;
+    gap: 10px;
+    margin-top: 16px;
+    flex-wrap: wrap;
+  }
+  .btn-wa {
+    flex: 1;
+    min-width: 190px;
+    background: #1B8A4B;
+    color: #fff;
+    border: none;
+    padding: 13px;
+    border-radius: 10px;
+    font-weight: 800;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .btn-copy {
+    flex: 1;
+    min-width: 140px;
+    background: var(--surface-soft);
+    color: var(--text);
+    border: 1px solid var(--border);
+    padding: 13px;
+    border-radius: 10px;
+    font-weight: 700;
+    font-size: 14px;
+    font-family: inherit;
+    cursor: pointer;
+  }
+  .status-msg {
+    margin-top: 10px;
+    font-size: 12.5px;
+    color: #1B8A4B;
+    font-weight: 600;
+  }
+
+  /* ABOUT & CONTACT FOOTER */
+  .info-section {
+    max-width: 1200px;
+    margin: 34px auto 0;
+    padding: 0 16px;
+  }
+  .info-grid {
+    display: grid;
+    grid-template-columns: 1.3fr 1fr;
+    gap: 16px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 24px;
+    box-shadow: 0 6px 24px rgba(24, 20, 21, 0.04);
+  }
+  @media (max-width: 720px) {
+    .info-grid { grid-template-columns: 1fr; padding: 18px; }
+  }
+  .info-block h3 {
+    margin: 0 0 8px;
+    font-family: "Playfair Display", Georgia, serif;
+    font-size: 20px;
+    color: var(--accent);
+  }
+  .info-block p {
+    margin: 0 0 12px;
+    font-size: 13.5px;
+    line-height: 1.65;
+    color: var(--muted);
+  }
+  .info-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .info-tag {
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    padding: 5px 11px;
+    border-radius: 999px;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .contact-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: 13.5px;
+  }
+  .contact-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 9px 12px;
+    background: var(--surface-soft);
+    border-radius: 11px;
+    color: var(--text);
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.15s;
+  }
+  .contact-item:hover {
+    background: #EDE6DC;
+  }
+  .contact-item span.lbl {
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.7px;
+    color: var(--muted);
+    display: block;
+    font-weight: 700;
+  }
+  .social-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 14px;
+  }
+  .social-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 13px;
+    border-radius: 999px;
+    background: var(--surface-soft);
+    border: 1px solid var(--border);
+    color: var(--text);
+    font-size: 12.5px;
+    font-weight: 700;
+    text-decoration: none;
+    transition: all 0.15s ease;
+  }
+  .social-pill:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: #FDF8F9;
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-inner">
+    <div class="brand">
+      <div class="brand-logo-wrap">
+        <img src="logo.png" alt="Sujan Store" onerror="this.style.display='none'" />
+      </div>
+      <div>
+        <h1>Sujan Store</h1>
+        <small>Traditional &amp; Ceremonial Boutique</small>
+      </div>
+    </div>
+    <div class="header-actions">
+      <div class="search-wrap">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+        <input id="searchInput" type="search" placeholder="Search mala, bag, code..." />
+      </div>
+      <select id="sortSelect" class="sort-select" onchange="renderGrid()">
+        <option value="default">Featured</option>
+        <option value="price-asc">Price: Low → High</option>
+        <option value="price-desc">Price: High → Low</option>
+      </select>
+      <div class="nav-links">
+        <a class="nav-btn" href="#about-contact">About Us</a>
+        <a class="nav-btn primary" href="#about-contact">Contact</a>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section class="hero">
+  <div class="hero-card">
+    <div>
+      <span class="hero-eyebrow">Official Collection</span>
+      <h2>Handcrafted Elegance for Every Celebration</h2>
+      <p>Tap any photo to zoom &amp; view angles. Select your pieces and send your order directly on WhatsApp.</p>
+    </div>
+    <div class="hero-badges">
+      <span class="hero-badge">Free Delivery in Kathmandu Valley</span>
+      <span class="hero-badge">Cash &amp; Digital Payment</span>
+    </div>
+  </div>
+</section>
+
+<div class="cat-wrap">
+  <div class="cat-bar" id="catBar"></div>
+</div>
+
+<main>
+  <div class="stats-line" id="statsLine"></div>
+  <div class="grid" id="productGrid"></div>
+</main>
+
+<section class="info-section" id="about-contact">
+  <div class="info-grid">
+    <div class="info-block">
+      <h3>About Sujan Store</h3>
+      <p>
+        Sujan Store is a Kathmandu-based boutique dedicated to authentic Nepali ceremonial wear and
+        festive essentials. From handcrafted Annaprasan Jari Malas, bridal Ghumto &amp; Nariwol sets,
+        and embroidered Makhmal bags to traditional Dhago, bangles, and cosmetics — every piece is
+        curated for weddings, Bratabandha, Pasni, and special cultural celebrations.
+      </p>
+      <div class="info-tags">
+        <span class="info-tag">Free Delivery in Kathmandu Valley</span>
+        <span class="info-tag">Nationwide Shipping</span>
+        <span class="info-tag">Cash &amp; Digital Payment</span>
+      </div>
+      <div class="social-row">
+        <a class="social-pill" href="https://www.facebook.com/sujanstore.makhan" target="_blank">Facebook</a>
+        <a class="social-pill" href="https://instagram.com/store_sujan" target="_blank">Instagram</a>
+        <a class="social-pill" href="https://tiktok.com/@sujan_store" target="_blank">TikTok</a>
+        <a class="social-pill" href="https://www.daraz.com.np/shop/qph7mfs9" target="_blank">Daraz Store</a>
+        <a class="social-pill" href="https://linktr.ee/SujanStore" target="_blank">Linktree</a>
+      </div>
+    </div>
+    <div class="info-block">
+      <h3>Contact Us</h3>
+      <div class="contact-list">
+        <a class="contact-item" href="https://wa.me/9779851237839" target="_blank">
+          <div><span class="lbl">WhatsApp / Call</span>+977 9851237839</div>
+        </a>
+        <a class="contact-item" href="mailto:Sujan.store.np@gmail.com">
+          <div><span class="lbl">Email</span>Sujan.store.np@gmail.com</div>
+        </a>
+        <div class="contact-item">
+          <div><span class="lbl">Service Area</span>Kathmandu Valley (Free Delivery) &amp; All Nepal</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="cart-bar" id="cartBar">
+  <div class="summary" id="cartSummary"></div>
+  <button onclick="openCheckout()">Review Order →</button>
+</div>
+
+<!-- PHOTO LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="if(event.target===this) closeLightbox()">
+  <button class="lb-close" onclick="closeLightbox()">×</button>
+  <div class="lb-stage">
+    <button class="lb-nav lb-prev" onclick="stepLightbox(-1)">‹</button>
+    <img id="lbMainImg" src="" alt="" />
+    <button class="lb-nav lb-next" onclick="stepLightbox(1)">›</button>
+  </div>
+  <div class="lb-caption" id="lbCaption"></div>
+  <div class="lb-thumbs" id="lbThumbs"></div>
+</div>
+
+<!-- ORDER MODAL -->
+<div class="modal-bg" id="checkoutModal" onclick="if(event.target===this) closeCheckout()">
+  <div class="modal">
+    <div class="modal-head">
+      <h2>Your Order Summary</h2>
+      <button class="modal-close" onclick="closeCheckout()">×</button>
+    </div>
+    <div id="orderItemsList"></div>
+    <div class="total-line">
+      <span>Estimated Total</span>
+      <span id="orderTotal">NPR 0</span>
+    </div>
+
+    <div class="form-group">
+      <label>Full Name *</label>
+      <input id="custName" type="text" placeholder="Enter your name" required />
+    </div>
+    <div class="form-group">
+      <label>Phone / WhatsApp Number *</label>
+      <input id="custPhone" type="tel" placeholder="98XXXXXXXX" required />
+    </div>
+    <div class="form-group">
+      <label>Delivery Address *</label>
+      <input id="custAddress" type="text" placeholder="Tole, Area, City / Landmark" required />
+    </div>
+    <div class="form-group">
+      <label>Notes (Optional)</label>
+      <textarea id="custNotes" rows="2" placeholder="Preferred color, size, or delivery instructions"></textarea>
+    </div>
+
+    <div class="btn-row">
+      <button class="btn-wa" onclick="submitWhatsApp()">Place Order &amp; Send on WhatsApp</button>
+      <button class="btn-copy" onclick="copyOrderText()">Place Order &amp; Copy Details</button>
+    </div>
+    <div class="status-msg" id="orderStatus"></div>
+  </div>
+</div>
+
+<script>
+const INITIAL_PRODUCTS = [{"code": "SS25-061", "name": "Mala 1", "nepali_name": "माला १", "daraz_name": "Premium Handcrafted Annaprasan Jari Mala for Baby Ceremony / Traditional Garland for First Rice Feeding Ritual, Religious Puja & Cultural Celebrations", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 600, "images": ["images/SS25-061_1.jpg", "images/SS25-061_2.jpg", "images/SS25-061_3.jpg", "images/SS25-061_4.jpg"]}, {"code": "SS25-065", "name": "Mala 3", "nepali_name": "माला ३", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 900, "images": ["images/SS25-065_1.jpg", "images/SS25-065_2.jpg", "images/SS25-065_3.jpg"]}, {"code": "SS25-067", "name": "Mala 4", "nepali_name": "माला ४", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 800, "images": ["images/SS25-067_1.jpg", "images/SS25-067_2.jpg", "images/SS25-067_3.jpg"]}, {"code": "SS25-069", "name": "Mala 5", "nepali_name": "माला ५", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1500, "images": ["images/SS25-069_1.jpg", "images/SS25-069_2.jpg", "images/SS25-069_3.jpg", "images/SS25-069_4.jpg"]}, {"code": "SS25-071", "name": "Mala 6", "nepali_name": "माला ६", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 850, "images": ["images/SS25-071_1.jpg", "images/SS25-071_2.jpg", "images/SS25-071_3.jpg", "images/SS25-071_4.jpg"]}, {"code": "SS25-073", "name": "Mala 7", "nepali_name": "माला ७", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 500, "images": ["images/SS25-073_1.jpg", "images/SS25-073_2.jpg", "images/SS25-073_3.jpg", "images/SS25-073_4.jpg"]}, {"code": "SS25-075", "name": "Mala 8", "nepali_name": "माला ८", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 350, "images": ["images/SS25-075_1.jpg", "images/SS25-075_2.jpg", "images/SS25-075_3.jpg", "images/SS25-075_4.jpg"]}, {"code": "SS25-077", "name": "Mala 9", "nepali_name": "माला ९", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 400, "images": ["images/SS25-077_1.jpg", "images/SS25-077_2.jpg", "images/SS25-077_3.jpg"]}, {"code": "SS25-143", "name": "Mala 10", "nepali_name": "माला १०", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1800, "images": ["images/SS25-143_1.jpg", "images/SS25-143_2.jpg", "images/SS25-143_3.jpg", "images/SS25-143_4.jpg"]}, {"code": "SS25-145", "name": "Mala 11", "nepali_name": "माला ११", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2500, "images": ["images/SS25-145_1.jpg", "images/SS25-145_2.jpg", "images/SS25-145_3.jpg", "images/SS25-145_4.jpg"]}, {"code": "SS25-147", "name": "Mala 12", "nepali_name": "माला १२", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-147_1.jpg", "images/SS25-147_2.jpg", "images/SS25-147_3.jpg"]}, {"code": "SS25-149", "name": "Mala 13", "nepali_name": "माला १३", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 700, "images": ["images/SS25-149_1.jpg", "images/SS25-149_2.jpg", "images/SS25-149_3.jpg"]}, {"code": "SS25-151", "name": "Mala 14", "nepali_name": "माला १४", "daraz_name": "Premium Traditional Wedding Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-151_1.jpg", "images/SS25-151_2.jpg", "images/SS25-151_3.jpg"]}, {"code": "SS25-153", "name": "Mala 15", "nepali_name": "माला १५", "daraz_name": "Jari Mala / Premium Traditional Wedding / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-153_1.jpg", "images/SS25-153_2.jpg", "images/SS25-153_3.jpg"]}, {"code": "SS25-155", "name": "Mala 16", "nepali_name": "माला १६", "daraz_name": "Jari Mala / Premium Traditional Wedding / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 700, "images": ["images/SS25-155_1.jpg", "images/SS25-155_2.jpg", "images/SS25-155_3.jpg"]}, {"code": "SS25-227", "name": "Mala 17", "nepali_name": "माला १७", "daraz_name": "Premium Traditional Wedding Dubo Jari Mala / Handcrafted Mala for Wedding & Festive Occasions / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 2000, "images": ["images/SS25-227_1.jpg", "images/SS25-227_2.jpg", "images/SS25-227_3.jpg", "images/SS25-227_4.jpg"]}, {"code": "SS25-259", "name": "Annaprasan Jari Malla", "nepali_name": "अन्नप्राशन जरी माला", "daraz_name": "Pasni (Annaprashan), Parties, and Traditional Ceremonies/ Traditional Garland for Child / Elegant Handwoven Mala / Premium Handcrafted Annaprasan Jari Mala for Baby Ceremony / Traditional Garland for First Rice Feeding Ritual, Religious Puja & Cultural C", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1000, "images": ["images/SS25-259_1.jpg", "images/SS25-259_2.jpg", "images/SS25-259_3.jpg", "images/SS25-259_4.jpg"]}, {"code": "SS25-261", "name": "Annaprasan Jari Malla", "nepali_name": "अन्नप्राशन जरी माला", "daraz_name": "Pasni (Annaprashan), Cultural Naming Ceremonies, Traditional Baby Welcoming Events, and Religious Festivities / Handcrafted Annaprasan Jari Mala for Baby Ceremony / Traditional Garland for First Rice Feeding Ritual, Religious Puja & Cultural Celeb", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1000, "images": ["images/SS25-261_1.jpg", "images/SS25-261_2.jpg", "images/SS25-261_3.jpg", "images/SS25-261_4.jpg"]}, {"code": "SS25-263", "name": "Jari Malla with stone", "nepali_name": "पत्थर जडित जरी माला", "daraz_name": "Premium Traditional Wedding Handcrafted Jari Mala / Weddings, Festive Celebrations, Parties, and Traditional Ceremonies / Traditional Bridal Garland for Bride & Groom, Marriage Rituals, Engagement & Reception / Elegant Handwoven Mala", "group": "Mala", "section": "Ceremonial Mala & Garlands", "price": 1500, "images": ["images/SS25-263_1.jpg", "images/SS25-263_2.jpg", "images/SS25-263_3.jpg", "images/SS25-263_4.jpg"]}, {"code": "SS25-025", "name": "Bag 1", "nepali_name": "ब्याग १", "daraz_name": "Luxury Golden Silk Handbag for Women – Premium Embellished Potli | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Royal Bead & Pearl Work Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-025_1.jpg", "images/SS25-025_2.jpg", "images/SS25-025_3.jpg", "images/SS25-025_4.jpg"]}, {"code": "SS25-027", "name": "Bag 2", "nepali_name": "ब्याग २", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Golden Bead Embellished Potli / Handbag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-027_1.jpg", "images/SS25-027_2.jpg", "images/SS25-027_3.jpg"]}, {"code": "SS25-029", "name": "Bag 3", "nepali_name": "ब्याग ३", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Beaded & Pearl Embroidered Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-029_1.jpg", "images/SS25-029_2.jpg", "images/SS25-029_3.jpg"]}, {"code": "SS25-031", "name": "Bag 4", "nepali_name": "ब्याग ४", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Tassel Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-031_1.jpg", "images/SS25-031_2.jpg", "images/SS25-031_3.jpg"]}, {"code": "SS25-033", "name": "Bag 5", "nepali_name": "ब्याग ५", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Potli Bag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-033_1.jpg", "images/SS25-033_2.jpg", "images/SS25-033_3.jpg"]}, {"code": "SS25-035", "name": "Bag 6", "nepali_name": "ब्याग ६", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Potli Bag / Handbag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-035_1.jpg", "images/SS25-035_2.jpg", "images/SS25-035_3.jpg"]}, {"code": "SS25-037", "name": "Bag 7", "nepali_name": "ब्याग ७", "daraz_name": "Luxury Red Velvet Handbag for Women – Embellished Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Jewel Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-037_1.jpg", "images/SS25-037_2.jpg", "images/SS25-037_3.jpg"]}, {"code": "SS25-039", "name": "Bag 8", "nepali_name": "ब्याग ८", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Stone & Pearl Work Potli Bag / Ethnic Heritage Collection", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-039_1.jpg", "images/SS25-039_2.jpg", "images/SS25-039_3.jpg"]}, {"code": "SS25-041", "name": "Bag 9", "nepali_name": "ब्याग ९", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl & Stone Embroidered Potli / Bag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-041_1.jpg", "images/SS25-041_2.jpg", "images/SS25-041_3.jpg"]}, {"code": "SS25-043", "name": "Bag 10", "nepali_name": "ब्याग १०", "daraz_name": "Luxury Potli Bag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Beaded Pearl & Gold Embossed Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-043_1.jpg", "images/SS25-043_2.jpg", "images/SS25-043_3.jpg"]}, {"code": "SS25-045", "name": "Bag 11", "nepali_name": "ब्याग ११", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Emerald Green Beaded Potli with Pearl Tassels / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-045_1.jpg", "images/SS25-045_2.jpg", "images/SS25-045_3.jpg"]}, {"code": "SS25-047", "name": "Bag 12", "nepali_name": "ब्याग १२", "daraz_name": "Luxury Yellow Silk Handbag for Women – Premium Embroidered Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Golden Bead & Pearl Embellished Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-047_1.jpg", "images/SS25-047_2.jpg", "images/SS25-047_3.jpg"]}, {"code": "SS25-101", "name": "Bag 13", "nepali_name": "ब्याग १३", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Maroon Mirror Embroidered Potli Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 500, "images": ["images/SS25-101_1.jpg", "images/SS25-101_2.jpg", "images/SS25-101_3.jpg"]}, {"code": "SS25-103", "name": "Bag 14", "nepali_name": "ब्याग १४", "daraz_name": "Luxury Velvet Potli Bag for Women – Premium Red Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag with Mirror & Beads | Traditional Potli Bag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 500, "images": ["images/SS25-103_1.jpg", "images/SS25-103_2.jpg", "images/SS25-103_3.jpg"]}, {"code": "SS25-173", "name": "Bag 17", "nepali_name": "ब्याग १७", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Ethnic Grace Velvet Collection | White / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-173_1.jpg", "images/SS25-173_2.jpg", "images/SS25-173_3.jpg", "images/SS25-173_4.jpg"]}, {"code": "SS25-175", "name": "Bag 18", "nepali_name": "ब्याग १८", "daraz_name": "Luxury Makhmali Handbag – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Elegant Empress Velvet Handbag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-175_1.jpg", "images/SS25-175_2.jpg", "images/SS25-175_3.jpg", "images/SS25-175_4.jpg"]}, {"code": "SS25-177", "name": "Bag 19", "nepali_name": "ब्याग १९", "daraz_name": "Luxury Makhmali Handbag – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Gift of Grace Handbag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-177_1.jpg", "images/SS25-177_2.jpg", "images/SS25-177_3.jpg", "images/SS25-177_4.jpg"]}, {"code": "SS25-179", "name": "Bag 20", "nepali_name": "ब्याग २०", "daraz_name": "Luxury Makhmali Handbag for Women – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Velvet Love Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-179_1.jpg", "images/SS25-179_2.jpg", "images/SS25-179_3.jpg", "images/SS25-179_4.jpg"]}, {"code": "SS25-229", "name": "Bag 21", "nepali_name": "ब्याग २१", "daraz_name": "Luxury Makhmali Handbag – Premium Velvet Clutch | Party, Wedding & Festive Collection | Handcrafted Ethnic Bag | Gift of Grace Handbag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-229_1.jpg", "images/SS25-229_2.jpg", "images/SS25-229_3.jpg", "images/SS25-229_4.jpg"]}, {"code": "SS25-231", "name": "Bag 22", "nepali_name": "ब्याग २२", "daraz_name": "Velvet Royale Handbag – Luxury Makhmali Clutch | Bridal, Party & Occasion Wear | Elegant Handcrafted Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-231_1.jpg", "images/SS25-231_2.jpg", "images/SS25-231_3.jpg", "images/SS25-231_4.jpg"]}, {"code": "SS25-233", "name": "Bag 23", "nepali_name": "ब्याग २३", "daraz_name": "Opulent Velvet Handbag – Luxury Makhmali Clutch | Ethnic Festive Collection | Handcrafted Elegance | Festive, Party & Bridal Wear / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-233_1.jpg", "images/SS25-233_2.jpg", "images/SS25-233_3.jpg", "images/SS25-233_4.jpg"]}, {"code": "SS25-235", "name": "Bag 24", "nepali_name": "ब्याग २४", "daraz_name": "Heritage Velvet Clutch – Premium Makhmali Handbag | Ethnic Wedding Collection | Classic Designer Bag | Pink | Handcrafted Ethnic Style / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-235_1.jpg", "images/SS25-235_2.jpg", "images/SS25-235_3.jpg", "images/SS25-235_4.jpg"]}, {"code": "SS25-237", "name": "Bag 25", "nepali_name": "ब्याग २५", "daraz_name": "Makhmali Handbag - Premium Velvet Potli Clutch | Wedding & Festive Special | Ethnic Designer Bag | Wedding, Party & Special Occasion Bag / Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 750, "images": ["images/SS25-237_1.jpg", "images/SS25-237_2.jpg", "images/SS25-237_3.jpg", "images/SS25-237_4.jpg"]}, {"code": "SS25-253", "name": "Bag 26", "nepali_name": "ब्याग २६", "daraz_name": "Red Embroidered Potli Bag with Golden Beads & Pearl Work | Bridal Party Potli Bag – Red Embroidered Handbag with Gold Beads | 2. Premium Red Beaded Potli Handbag with Golden Embroidery & Pearl Fringe |", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 2000, "images": ["images/SS25-253_1.jpg", "images/SS25-253_2.jpg", "images/SS25-253_3.jpg", "images/SS25-253_4.jpg"]}, {"code": "SS25-265", "name": "Makhmal Bag 27", "nepali_name": "मखमली ब्याग २७", "daraz_name": "Luxury Golden Pearl Embellished Potli Bag for Women | Elegant Embroidered Wedding Handbag / Designer Golden Ethnic Potli Bag | Pearl & Bead Work Traditional Wedding Party Handbag / Designer Ethnic Handbag", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 2000, "images": ["images/SS25-265_1.jpg", "images/SS25-265_2.jpg", "images/SS25-265_3.jpg", "images/SS25-265_4.jpg"]}, {"code": "SS25-267", "name": "Makhmal Bag 28", "nepali_name": "मखमली ब्याग २८", "daraz_name": "Luxury Red Pearl Embellished Potli Bag for Women | Floral Embroidered Ethnic Wedding & Party Wear Handbag / Perfect for Weddings & Festive Occasions / Premium Pearl & Bead Embellishments", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 2000, "images": ["images/SS25-267_1.jpg", "images/SS25-267_2.jpg", "images/SS25-267_3.jpg", "images/SS25-267_4.jpg"]}, {"code": "SS25-271", "name": "Makhmali Bag 29", "nepali_name": "मखमली ब्याग २९", "daraz_name": "Luxury Velvet Handbag for Women – Premium Embellished Potli | Wedding & Festive Collection | Handcrafted Ethnic Bag | Red Pearl, Bead & Golden Tassel Work Potli", "group": "Bag", "section": "Bags & Makhmal Clutches", "price": 700, "images": ["images/SS25-271_1.jpg", "images/SS25-271_2.jpg", "images/SS25-271_3.jpg", "images/SS25-271_4.jpg"]}, {"code": "SS25-013", "name": "Ghumto 1", "nepali_name": "घुम्टो १", "daraz_name": "Elegant Red Bridal Ghumto for Wedding / Traditional Bride Veil Dupatta for Marriage Ceremony, Engagement, Reception & Cultural Celebrations", "group": "Ghumto", "section": "Nariwol & Bridal Sets", "price": 700, "images": ["images/SS25-013_1.jpg", "images/SS25-013_2.jpg", "images/SS25-013_3.jpg", "images/SS25-013_4.jpg"]}, {"code": "SS25-016", "name": "Ghumto 2", "nepali_name": "घुम्टो २", "daraz_name": "Elegant Red Bridal Ghumto for Wedding / Traditional Bride Veil Dupatta for Marriage Ceremony, Engagement, Reception & Cultural Celebrations", "group": "Ghumto", "section": "Nariwol & Bridal Sets", "price": 1000, "images": ["images/SS25-016_1.jpg", "images/SS25-016_2.jpg", "images/SS25-016_3.jpg", "images/SS25-016_4.jpg"]}, {"code": "SS25-139", "name": "Nariwol Set 1", "nepali_name": "नरिवल सेट १", "daraz_name": "Nariwal Supari Set for Wedding & Engagement / Decorative Coconut & Betel Nut Set for Marriage Ceremony, Sagun, Puja & Traditional Rituals", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 2500, "images": ["images/SS25-139_1.jpg", "images/SS25-139_2.jpg", "images/SS25-139_3.jpg", "images/SS25-139_4.jpg"]}, {"code": "SS25-141", "name": "Nariwol Set 2", "nepali_name": "नरिवल सेट २", "daraz_name": "Nariwal Supari Set for Wedding & Engagement / Decorative Coconut & Betel Nut Set for Marriage Ceremony, Sagun, Puja & Traditional Rituals / Decorative Misri", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 2500, "images": ["images/SS25-141_1.jpg", "images/SS25-141_2.jpg", "images/SS25-141_3.jpg", "images/SS25-141_4.jpg"]}, {"code": "SS25-159", "name": "Nariwol Set 4", "nepali_name": "नरिवल सेट ४", "daraz_name": "Nariwal Supari Set for Wedding & Engagement / Decorative Coconut & Betel Nut Set for Marriage Ceremony, Sagun, Puja & Traditional Rituals / Decorative Misri / Velvet Padded Kalash", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 1500, "images": ["images/SS25-159_1.jpg", "images/SS25-159_2.jpg", "images/SS25-159_3.jpg", "images/SS25-159_4.jpg"]}, {"code": "SS25-255", "name": "Nariwol Set 5", "nepali_name": "नरिवल सेट ५", "daraz_name": "Premium Nepali Wedding Shubh Vivah Tray & Drape-Style Decorated Coconut (Nariwal) Set - Red Velvet Sagun Platter with Supari & Sindoor Holders for Engagement & Marriage / Nepali Marriage Sagun Platter / Swayambar Thali", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 1600, "images": ["images/SS25-255_1.jpg", "images/SS25-255_2.jpg", "images/SS25-255_3.jpg"]}, {"code": "SS25-257", "name": "Nariwol Set 6", "nepali_name": "नरिवल सेट ६", "daraz_name": "Premium Traditional Nepali \"Shubh Vivah\" Wedding Sagun Tray & Pointed-Drape Nariwal Set - Red Velvet & Gold Handmade Puja Platter/Thali for Marriage, Swayambar & Engagement ceremonies. (शुभ विवाह सगुन थाल सेट) /Exclusive Pointed-Drape Coconuts (Nariwal)", "group": "Nariwol set", "section": "Nariwol & Bridal Sets", "price": 2000, "images": ["images/SS25-257_1.jpg", "images/SS25-257_2.jpg", "images/SS25-257_3.jpg"]}, {"code": "SS25-269", "name": "Ganesh Ghumto", "nepali_name": "गणेश घुम्टो", "daraz_name": "Exclusive Ganesh Embroidered Bridal Ghumto for Wedding / Red Traditional Bride Veil Dupatta for Marriage Ceremony, Engagement, Reception & Cultural Celebrations", "group": "Ghumto", "section": "Nariwol & Bridal Sets", "price": 1500, "images": ["images/SS25-269_1.jpg", "images/SS25-269_2.jpg", "images/SS25-269_3.jpg", "images/SS25-269_4.jpg"]}, {"code": "SS25-009", "name": "Simple Dhago 5", "nepali_name": "साधारण धागो ५", "daraz_name": "Lachha Dori | Dhago | Traditional Red & Gold Decorative Sachika | Handmade Multi-color Sequin & Bead Work | Sacred Hindu Worship Thread | Festive Wrist Bracelet for Women & Girls | Religious Accessory for Pooja & Rituals", "group": "Dhago", "section": "Traditional Dhago", "price": 225, "images": ["images/SS25-009_1.jpg", "images/SS25-009_2.jpg", "images/SS25-009_3.jpg"]}, {"code": "SS25-239", "name": "Simple Dhago 11", "nepali_name": "साधारण धागो ११", "daraz_name": "Lachha Dori | Dhago | Soft Cotton Lachha Dori Rope | Premium Twisted Cotton Dori | Traditional Sachika | Handmade Cotton | Shrawan Holy Green Thread | Decorative Cotton Cord", "group": "Dhago", "section": "Traditional Dhago", "price": 350, "images": ["images/SS25-239_1.jpg", "images/SS25-239_2.jpg", "images/SS25-239_3.jpg", "images/SS25-239_4.jpg"]}, {"code": "SS25-241", "name": "Simple Dhago 12", "nepali_name": "साधारण धागो १२", "daraz_name": "Premium Quality Decorative Lachha Dori | Perfect for fashion and craft | Premium Quality Multipurpose Lachha Dori | Shrawan Lachha Dori for Girls | Traditional Festival Wrist Thread", "group": "Dhago", "section": "Traditional Dhago", "price": 330, "images": ["images/SS25-241_1.jpg", "images/SS25-241_2.jpg", "images/SS25-241_3.jpg", "images/SS25-241_4.jpg"]}, {"code": "SS25-243", "name": "Simple Dhago 13", "nepali_name": "साधारण धागो १३", "daraz_name": "Traditional Festival Lachha Dori for Women & Girls | Shrawan Special Multicolor | Handmade Shrawan Lachha Dori | Lucky Festival Thread for Girls | Traditional Festival Wrist Thread | Fashionable Lachha Dori Wrist Band for Shrawan Festival & Daily Wear", "group": "Dhago", "section": "Traditional Dhago", "price": 450, "images": ["images/SS25-243_1.jpg", "images/SS25-243_2.jpg", "images/SS25-243_3.jpg", "images/SS25-243_4.jpg"]}, {"code": "SS25-245", "name": "Simple Dhago 14", "nepali_name": "साधारण धागो १४", "daraz_name": "Lachha Dori | Dhago | Premium Shrawan Green Wrist Thread | Traditional Sachika | Handmade Cotton | Religious Wrist Thread | Sacred Hindu Worship Thread | Shrawan Holy Green Thread", "group": "Dhago", "section": "Traditional Dhago", "price": 225, "images": ["images/SS25-245_1.jpg", "images/SS25-245_2.jpg", "images/SS25-245_3.jpg", "images/SS25-245_4.jpg"]}, {"code": "SS25-247", "name": "Simple Dhago 15", "nepali_name": "साधारण धागो १५", "daraz_name": "Lachha Dori | Dhago | Traditional Green Lachha Dori for Shrawan | Sacred Hindu Worship Thread | Shrawan Special Green Lachha Dori (Sachika) | Sacred Hindu Religious Thread | Cotton Wrist Bracelet for Women and Girls", "group": "Dhago", "section": "Traditional Dhago", "price": 225, "images": ["images/SS25-247_1.jpg", "images/SS25-247_2.jpg", "images/SS25-247_3.jpg", "images/SS25-247_4.jpg"]}, {"code": "SS25-251", "name": "Natthi 1", "nepali_name": "नत्थी १", "daraz_name": "Traditional Nepali Short Naththi (नथ्थी) with Multicolor Beaded Decorative Hair Accessory | Colorful Beads | Traditional Religious & Festival Naththi | Red, Green & golden beads for Puja, Ceremony & Cultural Events | Hair Accessories", "group": "Natthi", "section": "Bangles & Traditional Jewelry", "price": 300, "images": ["images/SS25-251_1.jpg", "images/SS25-251_2.jpg", "images/SS25-251_3.jpg", "images/SS25-251_4.jpg"]}, {"code": "SS25-049", "name": "Sindur Chopne 1", "nepali_name": "सिन्दूर चोप्ने १", "daraz_name": "Sindoor Chopne (सिन्दूर चोप्ने) / Traditional Nepali Marriage / Nepali Makhamali / Handcraft / Head Cover", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-049_1.jpg", "images/SS25-049_2.jpg", "images/SS25-049_3.jpg"]}, {"code": "SS25-051", "name": "Sindur Chopne 2", "nepali_name": "सिन्दूर चोप्ने २", "daraz_name": "Sindoor Chopne (सिन्दूर चोप्ने) / Traditional Nepali Marriage / Nepali Makhamali / Handcraft / Head Cover", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-051_1.jpg", "images/SS25-051_2.jpg", "images/SS25-051_3.jpg", "images/SS25-051_4.jpg"]}, {"code": "SS25-053", "name": "Sindur Chopne 3", "nepali_name": "सिन्दूर चोप्ने ३", "daraz_name": "Sindoor Chopne (सिन्दूर चोप्ने) / Traditional Nepali Marriage / Nepali Makhamali / Handcraft / Head Cover", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-053_1.jpg", "images/SS25-053_2.jpg", "images/SS25-053_3.jpg", "images/SS25-053_4.jpg"]}, {"code": "SS25-181", "name": "Ala 1", "nepali_name": "आला १", "daraz_name": "Taral Alta – Traditional Newari Cultural Red Liquid Alta for Hands & Feet | Bhaitika | Wedding | Festivals | Festival & Wedding Essential Alta – Red Liquid | Hand & Foot Red Color", "group": "Ala", "section": "Ceremonial Essentials", "price": 200, "images": ["images/SS25-181_1.jpg", "images/SS25-181_2.jpg", "images/SS25-181_3.jpg", "images/SS25-181_4.jpg"]}, {"code": "SS25-183", "name": "Saptarangi Tika 1", "nepali_name": "सप्तरङ्गी टीका १", "daraz_name": "Saptarangi Bhaitika Set | 11 Rangi Tika Set for Bhaitika – Complete Bhai Tika Puja Set with Akshyata, Diyo & Garland | Traditional Tihar Special | Celebrate Bhai Tika with Love | Tihar", "group": "Saptarangi Tika", "section": "Ceremonial Essentials", "price": 280, "images": ["images/SS25-183_1.jpg", "images/SS25-183_2.jpg", "images/SS25-183_3.jpg", "images/SS25-183_4.jpg"]}, {"code": "SS25-279", "name": "Sindur Chopne 6", "nepali_name": "सिन्दूर चोप्ने ६", "daraz_name": "", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-279_1.jpg", "images/SS25-279_2.jpg", "images/SS25-279_3.jpg", "images/SS25-279_4.jpg"]}, {"code": "SS25-279", "name": "Sindur Chopne 7", "nepali_name": "सिन्दूर चोप्ने ७", "daraz_name": "", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-279_1.jpg", "images/SS25-279_2.jpg", "images/SS25-279_3.jpg", "images/SS25-279_4.jpg"]}, {"code": "SS25-281", "name": "Sindur Chopne 8", "nepali_name": "सिन्दूर चोप्ने ८", "daraz_name": "", "group": "Sindur Chopne", "section": "Ceremonial Essentials", "price": 150, "images": ["images/SS25-281_1.jpg", "images/SS25-281_2.jpg", "images/SS25-281_3.jpg", "images/SS25-281_4.jpg"]}, {"code": "SS25-273", "name": "Makhmal Shoes with Heel", "nepali_name": "मखमली हिल जुत्ता", "daraz_name": "New Sujan Elegant Red Bridal Shoes for Wedding / Traditional Nepali Footwear for Marriage Ceremony & Engagement | Floral Embellished Velvet Jutti with High Heel", "group": "Shoes", "section": "Footwear", "price": 1700, "images": ["images/SS25-273_1.jpg", "images/SS25-273_2.jpg", "images/SS25-273_3.jpg", "images/SS25-273_4.jpg"]}, {"code": "SS25-275", "name": "Makhmal Shoes with Medium Heel", "nepali_name": "मखमली मध्यम हिल जुत्ता", "daraz_name": "Premium Red Velvet Shoes for Wedding / Bride Ethnic Footwear with Golden Starburst Embroidery for Puja, Festival & Cultural Celebrations | Elegant Medium Heel Jutti", "group": "Shoes", "section": "Footwear", "price": 1000, "images": ["images/SS25-275_1.jpg", "images/SS25-275_2.jpg", "images/SS25-275_3.jpg", "images/SS25-275_4.jpg"]}, {"code": "SS25-277", "name": "Makhmal Shoes with low Heel", "nepali_name": "मखमली कम हिल जुत्ता", "daraz_name": "Classy Red Velvet Slip-on Shoes for Women / Traditional Ethnic Footwear with Golden Paisley Embroidery for Puja, Wedding & Festivals | Comfortable Low Heel Jutti", "group": "Shoes", "section": "Footwear", "price": 700, "images": ["images/SS25-277_1.jpg", "images/SS25-277_2.jpg", "images/SS25-277_3.jpg", "images/SS25-277_4.jpg"]}];
+let PRODUCTS = [...INITIAL_PRODUCTS];
+let SECTIONS = ["Ceremonial Mala & Garlands", "Bags & Makhmal Clutches", "Nariwol & Bridal Sets", "Traditional Dhago", "Bangles & Traditional Jewelry", "Ceremonial Essentials", "Footwear"];
+const WHATSAPP_NUMBER = "9779851237839";
+const ORDER_EMAIL = "Sthapit.Rojan@gmail.com";
+const ORDER_CC_EMAILS = "Sujan.store.np@gmail.com,unisha.karanjit@gmail.com";
+const SITE_BASE_URL = "https://sujanstore.github.io/";
+const APPS_SCRIPT_URL = "";
+const GROUP_TO_SECTION = {"Mala": "Ceremonial Mala & Garlands", "Pote": "Ceremonial Mala & Garlands", "Bag": "Bags & Makhmal Clutches", "Nariwol set": "Nariwol & Bridal Sets", "Set": "Nariwol & Bridal Sets", "Ghumto": "Nariwol & Bridal Sets", "Crown": "Nariwol & Bridal Sets", "Dhago": "Traditional Dhago", "Bangle": "Bangles & Traditional Jewelry", "Natthi": "Bangles & Traditional Jewelry", "Saree Pin": "Bangles & Traditional Jewelry", "Hair Pin": "Bangles & Traditional Jewelry", "Tika": "Ceremonial Essentials", "Saptarangi Tika": "Ceremonial Essentials", "Sindur": "Ceremonial Essentials", "Sindur Chopne": "Ceremonial Essentials", "Ala": "Ceremonial Essentials", "Shoes": "Footwear", "Kajal": "Beauty & Cosmetics", "Blush": "Beauty & Cosmetics", "Mascara": "Beauty & Cosmetics", "Nail Polish": "Beauty & Cosmetics"};
+const SECTION_ORDER = ["Ceremonial Mala & Garlands", "Bags & Makhmal Clutches", "Nariwol & Bridal Sets", "Traditional Dhago", "Bangles & Traditional Jewelry", "Ceremonial Essentials", "Footwear", "Beauty & Cosmetics"];
+const LIVE_SHEET_CSV_URL = "https://docs.google.com/spreadsheets/d/1Oghzph9BTPKGlJ-YbD9wvcZWHJtdoj4fU5Rlc9QTsio/export?format=csv&gid=0";
+
+function driveDirectFallback(url) {
+  const m = String(url || "").match(/thumbnail\?id=([^&]+)/);
+  return m ? `https://drive.google.com/uc?export=view&id=${m[1]}` : "";
+}
+
+function handleImgError(imgEl) {
+  if (!imgEl.dataset.triedFb) {
+    const fb = driveDirectFallback(imgEl.src);
+    if (fb && fb !== imgEl.src) {
+      imgEl.dataset.triedFb = "1";
+      imgEl.src = fb;
+      return;
+    }
+  }
+}
+
+function parseCsv(text) {
+  const rows = [];
+  let row = [];
+  let cur = "";
+  let inQuotes = false;
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i];
+    if (inQuotes) {
+      if (ch === '"' && text[i + 1] === '"') {
+        cur += '"';
+        i++;
+      } else if (ch === '"') {
+        inQuotes = false;
+      } else {
+        cur += ch;
+      }
+    } else {
+      if (ch === '"') {
+        inQuotes = true;
+      } else if (ch === ',') {
+        row.push(cur);
+        cur = "";
+      } else if (ch === '\r') {
+        continue;
+      } else if (ch === '\n') {
+        row.push(cur);
+        rows.push(row);
+        row = [];
+        cur = "";
+      } else {
+        cur += ch;
+      }
+    }
+  }
+  if (cur.length || row.length) {
+    row.push(cur);
+    rows.push(row);
+  }
+  if (!rows.length) return [];
+  const headers = rows[0].map(h => h.trim());
+  return rows.slice(1).map(r => {
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h] = (r[idx] || "").trim(); });
+    return obj;
+  });
+}
+
+function isRowAvailable(statusStr) {
+  const st = String(statusStr || "").toLowerCase();
+  return !(st.includes("not av") || st.includes("unavailable") || st.includes("out of stock"));
+}
+
+async function syncCatalogWithLiveSheet() {
+  try {
+    const res = await fetch(`${LIVE_SHEET_CSV_URL}&_t=${Date.now()}`, { cache: "no-store" });
+    if (!res.ok) return;
+    const csvText = await res.text();
+    const rows = parseCsv(csvText);
+    if (!rows.length) return;
+
+    const existingMap = new Map(INITIAL_PRODUCTS.map(p => [p.code, p]));
+    const updatedProducts = [];
+
+    for (const r of rows) {
+      const code = (r["Pdt Code"] || "").trim();
+      if (!code) continue;
+      if (!isRowAvailable(r["Status"])) {
+        delete cart[code];
+        continue;
+      }
+
+      const name = (r["Product Name"] || "").trim() || code;
+      const darazName = (r["Daraz Name"] || "").trim();
+      const group = (r["Product Group"] || "").trim() || "Other";
+      const section = GROUP_TO_SECTION[group] || "Other Products";
+      const priceNum = r["Daraz SP"] ? Math.round(Number(r["Daraz SP"]) || 0) : 0;
+      const liveImg = (r["Image"] || "").trim();
+
+      const prev = existingMap.get(code);
+      if (prev) {
+        const imgs = (prev.images && prev.images.length) ? prev.images : (liveImg ? [liveImg] : []);
+        if (!imgs.length) continue;
+        updatedProducts.push({
+          ...prev,
+          name,
+          daraz_name: darazName || prev.daraz_name || "",
+          group,
+          section,
+          price: priceNum || prev.price,
+          images: imgs,
+        });
+      } else {
+        if (!liveImg) continue;
+        updatedProducts.push({
+          code,
+          name,
+          nepali_name: "",
+          daraz_name: darazName,
+          group,
+          section,
+          price: priceNum,
+          images: [liveImg],
+        });
+      }
+    }
+
+    const rankMap = new Map(SECTION_ORDER.map((s, idx) => [s, idx]));
+    updatedProducts.sort((a, b) => {
+      const ra = rankMap.has(a.section) ? rankMap.get(a.section) : 999;
+      const rb = rankMap.has(b.section) ? rankMap.get(b.section) : 999;
+      return ra !== rb ? ra - rb : a.code.localeCompare(b.code);
+    });
+
+    PRODUCTS = updatedProducts;
+    SECTIONS = [...new Set(PRODUCTS.map(p => p.section))];
+    if (activeSection !== "All" && !SECTIONS.includes(activeSection)) {
+      activeSection = "All";
+    }
+    renderCategories();
+    renderGrid();
+    renderCartBar();
+  } catch (err) {
+    console.warn("Live sheet sync skipped:", err);
+  }
+}
+
+let activeSection = "All";
+let searchTerm = "";
+const cart = {};
+const activeCardImg = {};
+
+let lbProduct = null;
+let lbIndex = 0;
+
+function renderCategories() {
+  const bar = document.getElementById("catBar");
+  const all = ["All", ...SECTIONS];
+  bar.innerHTML = all.map(sec => `
+    <button class="cat-pill ${sec === activeSection ? 'active' : ''}" onclick="setSection('${sec.replace(/'/g, "\\'")}')">
+      ${sec}
+    </button>
+  `).join("");
+}
+
+function setSection(sec) {
+  activeSection = sec;
+  renderCategories();
+  renderGrid();
+}
+
+function getFiltered() {
+  const q = searchTerm.trim().toLowerCase();
+  const sortBy = document.getElementById("sortSelect").value;
+  const list = PRODUCTS.filter(p => {
+    const matchSec = activeSection === "All" || p.section === activeSection;
+    const matchQ = !q || p.name.toLowerCase().includes(q) || (p.nepali_name || "").toLowerCase().includes(q) || (p.daraz_name || "").toLowerCase().includes(q) || p.code.toLowerCase().includes(q) || p.group.toLowerCase().includes(q);
+    return matchSec && matchQ;
+  });
+  if (sortBy === "price-asc") {
+    list.sort((a, b) => (a.price || 999999) - (b.price || 999999));
+  } else if (sortBy === "price-desc") {
+    list.sort((a, b) => (b.price || 0) - (a.price || 0));
+  }
+  return list;
+}
+
+function swapCardThumb(code, idx) {
+  activeCardImg[code] = idx;
+  const prod = PRODUCTS.find(p => p.code === code);
+  if (!prod) return;
+  const imgEl = document.getElementById(`main-${code}`);
+  if (imgEl) {
+    imgEl.dataset.triedFb = "";
+    imgEl.src = prod.images[idx];
+  }
+  const thumbWrap = document.getElementById(`thumbs-${code}`);
+  if (thumbWrap) {
+    [...thumbWrap.children].forEach((el, i) => el.classList.toggle("active", i === idx));
+  }
+}
+
+function renderGrid() {
+  const list = getFiltered();
+  document.getElementById("statsLine").textContent = `Showing ${list.length} of ${PRODUCTS.length} available products`;
+  const grid = document.getElementById("productGrid");
+
+  grid.innerHTML = list.map(p => {
+    const curIdx = activeCardImg[p.code] || 0;
+    const qty = cart[p.code] || 0;
+    const priceText = p.price > 0 ? `NPR ${p.price.toLocaleString()}` : "Price on Inquiry";
+    const thumbsHtml = p.images.length > 1 ? `
+      <div class="thumbs" id="thumbs-${p.code}">
+        ${p.images.map((src, i) => `
+          <img src="${src}" class="${i === curIdx ? 'active' : ''}" onclick="swapCardThumb('${p.code}', ${i})" alt="" loading="lazy" />
+        `).join("")}
+      </div>` : "";
+
+    const actionHtml = qty > 0 ? `
+      <div class="qty-box">
+        <button onclick="updateQty('${p.code}', -1)">−</button>
+        <span>${qty} pcs</span>
+        <button onclick="updateQty('${p.code}', 1)">+</button>
+      </div>` : `
+      <button class="add-btn" onclick="updateQty('${p.code}', 1)">+ Add to Order</button>`;
+
+    return `
+      <div class="card">
+        <div class="img-wrap" onclick="openLightbox('${p.code}')">
+          <img id="main-${p.code}" class="main-photo" src="${p.images[curIdx]}" alt="${p.name}" loading="lazy" onerror="handleImgError(this)" />
+          <span class="sku-tag">${p.code}</span>
+          <span class="zoom-btn" title="Zoom">🔍</span>
+        </div>
+        ${thumbsHtml}
+        <div class="card-body">
+          <div>
+            <div class="cat-name">${p.group}</div>
+            <div class="pdt-title">${p.name}</div>
+            ${p.nepali_name ? `<div class="nepali-title">${p.nepali_name}</div>` : ""}
+            ${p.daraz_name ? `<div class="daraz-title">${p.daraz_name}</div>` : ""}
+            <div class="price-row"><span class="price">${priceText}</span></div>
+          </div>
+          ${actionHtml}
+        </div>
+      </div>`;
+  }).join("");
+}
+
+function updateQty(code, delta) {
+  const next = (cart[code] || 0) + delta;
+  if (next <= 0) delete cart[code];
+  else cart[code] = next;
+  renderGrid();
+  renderCartBar();
+  if (document.getElementById("checkoutModal").classList.contains("open")) {
+    renderCheckoutItems();
+  }
+}
+
+function renderCartBar() {
+  const entries = Object.entries(cart);
+  const bar = document.getElementById("cartBar");
+  if (!entries.length) {
+    bar.classList.remove("show");
+    return;
+  }
+  let totalPcs = 0;
+  let totalNpr = 0;
+  entries.forEach(([code, qty]) => {
+    const p = PRODUCTS.find(x => x.code === code);
+    totalPcs += qty;
+    if (p && p.price > 0) totalNpr += p.price * qty;
+  });
+  document.getElementById("cartSummary").innerHTML =
+    `<strong>${entries.length} product${entries.length > 1 ? 's' : ''} (${totalPcs} pcs)</strong> • Est. NPR ${totalNpr.toLocaleString()}`;
+  bar.classList.add("show");
+}
+
+/* LIGHTBOX */
+function openLightbox(code) {
+  lbProduct = PRODUCTS.find(p => p.code === code);
+  if (!lbProduct) return;
+  lbIndex = activeCardImg[code] || 0;
+  updateLightbox();
+  document.getElementById("lightbox").classList.add("open");
+}
+function closeLightbox() {
+  document.getElementById("lightbox").classList.remove("open");
+}
+function stepLightbox(dir) {
+  if (!lbProduct) return;
+  lbIndex = (lbIndex + dir + lbProduct.images.length) % lbProduct.images.length;
+  updateLightbox();
+}
+function updateLightbox() {
+  const lbImg = document.getElementById("lbMainImg");
+  lbImg.dataset.triedFb = "";
+  lbImg.onerror = function() { handleImgError(this); };
+  lbImg.src = lbProduct.images[lbIndex];
+  const priceText = lbProduct.price > 0 ? `NPR ${lbProduct.price.toLocaleString()}` : "Price on Inquiry";
+  const npPart = lbProduct.nepali_name ? ` / ${lbProduct.nepali_name}` : "";
+  const descPart = lbProduct.daraz_name ? ` — ${lbProduct.daraz_name}` : "";
+  document.getElementById("lbCaption").textContent = `${lbProduct.name}${npPart} (${lbProduct.code}) • ${priceText} [${lbIndex + 1}/${lbProduct.images.length}]${descPart}`;
+  document.getElementById("lbThumbs").innerHTML = lbProduct.images.map((src, i) => `
+    <img src="${src}" class="${i === lbIndex ? 'active' : ''}" onclick="lbIndex=${i}; updateLightbox();" />
+  `).join("");
+}
+
+/* CHECKOUT */
+function openCheckout() {
+  renderCheckoutItems();
+  document.getElementById("orderStatus").textContent = "";
+  document.getElementById("checkoutModal").classList.add("open");
+}
+function closeCheckout() {
+  document.getElementById("checkoutModal").classList.remove("open");
+}
+function renderCheckoutItems() {
+  const entries = Object.entries(cart);
+  const container = document.getElementById("orderItemsList");
+  if (!entries.length) {
+    container.innerHTML = "<p>Your order is empty.</p>";
+    document.getElementById("orderTotal").textContent = "NPR 0";
+    return;
+  }
+  let total = 0;
+  container.innerHTML = entries.map(([code, qty]) => {
+    const p = PRODUCTS.find(x => x.code === code);
+    const sub = p.price > 0 ? p.price * qty : 0;
+    total += sub;
+    const subTxt = p.price > 0 ? `NPR ${sub.toLocaleString()}` : "Inquiry";
+    return `
+      <div class="order-item">
+        <div class="oi-left">
+          <img src="${p.images[0]}" alt="" />
+          <div><strong>${p.name}</strong> <small>(${p.code})</small><br/><small>${subTxt}</small></div>
+        </div>
+        <div class="oi-ctrl">
+          <button onclick="updateQty('${code}', -1)">−</button>
+          <span>${qty}</span>
+          <button onclick="updateQty('${code}', 1)">+</button>
+        </div>
+      </div>`;
+  }).join("");
+  document.getElementById("orderTotal").textContent = `NPR ${total.toLocaleString()}`;
+}
+
+function buildOrderMessage() {
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const addr = document.getElementById("custAddress").value.trim();
+  const notes = document.getElementById("custNotes").value.trim();
+
+  if (!name || !phone || !addr) {
+    alert("Please fill in your Name, Phone Number, and Delivery Address.");
+    return null;
+  }
+  const entries = Object.entries(cart);
+  if (!entries.length) {
+    alert("Please add at least one product to your order.");
+    return null;
+  }
+
+  let total = 0;
+  const lines = ["*New Order — Sujan Store*", ""];
+  entries.forEach(([code, qty], idx) => {
+    const p = PRODUCTS.find(x => x.code === code);
+    const sub = p.price > 0 ? p.price * qty : 0;
+    total += sub;
+    const pricePart = p.price > 0 ? `NPR ${sub.toLocaleString()}` : "Price on Inquiry";
+    lines.push(`${idx + 1}. ${p.name} [${code}] × ${qty} pcs — ${pricePart}`);
+  });
+  lines.push("", `*Estimated Total:* NPR ${total.toLocaleString()}`);
+  lines.push("", "*Customer Details:*");
+  lines.push(`Name: ${name}`);
+  lines.push(`Phone: ${phone}`);
+  lines.push(`Address: ${addr}`);
+  if (notes) lines.push(`Notes: ${notes}`);
+  return lines.join("\n");
+}
+
+function logToSheetIfConfigured(msg) {
+  if (!APPS_SCRIPT_URL) return;
+  fetch(APPS_SCRIPT_URL, {
+    method: "POST",
+    mode: "no-cors",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      name: document.getElementById("custName").value.trim(),
+      phone: document.getElementById("custPhone").value.trim(),
+      address: document.getElementById("custAddress").value.trim(),
+      notes: document.getElementById("custNotes").value.trim(),
+      items: cart,
+      summary: msg,
+    })
+  }).catch(() => {});
+}
+
+function sendOrderEmail(msg) {
+  if (!ORDER_EMAIL) return Promise.resolve();
+  const name = document.getElementById("custName").value.trim();
+  const phone = document.getElementById("custPhone").value.trim();
+  const addr = document.getElementById("custAddress").value.trim();
+  const notes = document.getElementById("custNotes").value.trim();
+
+  let total = 0;
+  const payload = {
+    _subject: `New Order — Sujan Store (${name})`,
+    _cc: ORDER_CC_EMAILS,
+    _template: "table",
+    _captcha: "false",
+    Customer_Name: name,
+    Customer_Phone: phone,
+    Delivery_Address: addr,
+    Notes: notes || "-",
+  };
+
+  Object.entries(cart).forEach(([code, qty], idx) => {
+    const p = PRODUCTS.find(x => x.code === code);
+    const sub = p.price > 0 ? p.price * qty : 0;
+    total += sub;
+    const pricePart = p.price > 0 ? `NPR ${sub.toLocaleString()}` : "Price on Inquiry";
+    const imgPath = (p.images && p.images[0]) ? p.images[0] : "";
+    const imgUrl = imgPath ? (imgPath.startsWith("http") ? imgPath : `${SITE_BASE_URL}${imgPath}`) : "";
+    payload[`Item_${idx + 1}`] = `${p.name} [${code}] × ${qty} pcs — ${pricePart}`;
+    if (imgUrl) {
+      payload[`Item_${idx + 1}_Photo`] = imgUrl;
+    }
+  });
+
+  payload.Estimated_Total = `NPR ${total.toLocaleString()}`;
+  payload.Order_Summary = msg;
+
+  return fetch(`https://formsubmit.co/ajax/${encodeURIComponent(ORDER_EMAIL)}`, {
+    method: "POST",
+    keepalive: true,
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json",
+    },
+    body: JSON.stringify(payload),
+  })
+  .then(r => r.json())
+  .then(data => {
+    if (data && data.success === "false" && data.message) {
+      document.getElementById("orderStatus").textContent = data.message;
+    }
+    return data;
+  })
+  .catch(() => {});
+}
+
+function showToast(text) {
+  let toast = document.getElementById("orderToast");
+  if (!toast) {
+    toast = document.createElement("div");
+    toast.id = "orderToast";
+    toast.style.cssText = "position:fixed;top:76px;left:50%;transform:translateX(-50%);background:#1B8A4B;color:#fff;padding:11px 20px;border-radius:999px;font-size:13.5px;font-weight:700;z-index:120;box-shadow:0 8px 24px rgba(0,0,0,0.22);text-align:center;max-width:90vw;";
+    document.body.appendChild(toast);
+  }
+  toast.textContent = text;
+  toast.style.display = "block";
+  clearTimeout(window._toastTimer);
+  window._toastTimer = setTimeout(() => { toast.style.display = "none"; }, 5000);
+}
+
+function resetToHomeAfterOrder(toastText) {
+  Object.keys(cart).forEach(k => delete cart[k]);
+  activeSection = "All";
+  searchTerm = "";
+  const searchEl = document.getElementById("searchInput");
+  if (searchEl) searchEl.value = "";
+  closeCheckout();
+  renderCategories();
+  renderGrid();
+  renderCartBar();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+  showToast(toastText);
+}
+
+function submitWhatsApp() {
+  const msg = buildOrderMessage();
+  if (!msg) return;
+  logToSheetIfConfigured(msg);
+  sendOrderEmail(msg);
+  if (WHATSAPP_NUMBER) {
+    const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+    window.open(url, "_blank");
+  } else {
+    navigator.clipboard?.writeText(msg);
+  }
+  resetToHomeAfterOrder("Thank you! Order placed & opening WhatsApp.");
+}
+
+function copyOrderText() {
+  const msg = buildOrderMessage();
+  if (!msg) return;
+  logToSheetIfConfigured(msg);
+  sendOrderEmail(msg);
+  navigator.clipboard?.writeText(msg);
+  resetToHomeAfterOrder("Thank you! Order placed & copied to clipboard.");
+}
+
+document.getElementById("searchInput").addEventListener("input", e => {
+  searchTerm = e.target.value;
+  renderGrid();
+});
+
+renderCategories();
+renderGrid();
+syncCatalogWithLiveSheet();
+</script>
+</body>
+</html>
