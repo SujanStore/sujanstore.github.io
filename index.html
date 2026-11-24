@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Sujan Store — Product Catalog</title>
+<title>New Sujan Store — Product Catalog</title>
 <meta name="description" content="Shop authentic Nepali ceremonial wear, Annaprasan Jari Malas, Makhmal bags, bridal sets, and cosmetics. Tap photos to zoom and order directly on WhatsApp." />
 <link rel="icon" type="image/png" href="favicon.png" />
 <link rel="apple-touch-icon" href="favicon.png" />
@@ -16,14 +16,14 @@
   gtag("js", new Date());
 </script>
 <meta property="og:type" content="website" />
-<meta property="og:title" content="Sujan Store — Official Product Catalog" />
+<meta property="og:title" content="New Sujan Store — Official Product Catalog" />
 <meta property="og:description" content="Traditional Ceremonial Wear, Jewelry, Bags &amp; Cosmetics • Free Delivery Inside Kathmandu Valley" />
 <meta property="og:url" content="https://sujanstore.github.io/" />
 <meta property="og:image" content="https://sujanstore.github.io/preview.png" />
 <meta property="og:image:width" content="1200" />
 <meta property="og:image:height" content="630" />
 <meta name="twitter:card" content="summary_large_image" />
-<meta name="twitter:title" content="Sujan Store — Official Product Catalog" />
+<meta name="twitter:title" content="New Sujan Store — Official Product Catalog" />
 <meta name="twitter:description" content="Traditional Ceremonial Wear, Jewelry, Bags &amp; Cosmetics • Free Delivery Inside Kathmandu Valley" />
 <meta name="twitter:image" content="https://sujanstore.github.io/preview.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -1568,10 +1568,10 @@
   <div class="header-inner">
     <div class="brand">
       <div class="brand-logo-wrap">
-        <img src="logo.png" alt="Sujan Store" onerror="this.style.display='none'" />
+        <img src="logo.png" alt="New Sujan Store" onerror="this.style.display='none'" />
       </div>
       <div>
-        <h1>Sujan Store</h1>
+        <h1>New Sujan Store</h1>
         <small>Traditional &amp; Ceremonial Boutique</small>
       </div>
     </div>
@@ -1676,9 +1676,9 @@
 <section class="info-section" id="about-contact">
   <div class="info-grid">
     <div class="info-block">
-      <h3>About Sujan Store</h3>
+      <h3>About New Sujan Store</h3>
       <p>
-        Sujan Store is a Kathmandu-based boutique dedicated to authentic Nepali ceremonial wear and
+        New Sujan Store is a Kathmandu-based boutique dedicated to authentic Nepali ceremonial wear and
         festive essentials. From handcrafted Annaprasan Jari Malas, bridal Ghumto &amp; Nariwol sets,
         and embroidered Makhmal bags to traditional Dhago, bangles, and cosmetics — every piece is
         curated for weddings, Bratabandha, Pasni, and special cultural celebrations.
@@ -1731,10 +1731,10 @@
 
 <footer class="site-footer">
   <div class="footer-inner">
-    <img class="footer-logo" src="logo.png" alt="Sujan Store" onerror="this.style.display='none'" />
-    <h3 class="footer-brand">Sujan Store</h3>
+    <img class="footer-logo" src="logo.png" alt="New Sujan Store" onerror="this.style.display='none'" />
+    <h3 class="footer-brand">New Sujan Store</h3>
     <p class="footer-sub">Cash on Delivery Available &nbsp;•&nbsp; Free Delivery Inside Kathmandu Valley &nbsp;•&nbsp; Nationwide Shipping</p>
-    <div class="footer-copy">© Sujan Store, Kathmandu, Nepal • WhatsApp: +977 9851237839</div>
+    <div class="footer-copy">© New Sujan Store, Kathmandu, Nepal • WhatsApp: +977 9851237839</div>
   </div>
 </footer>
 
@@ -2403,8 +2403,8 @@ function shareQuickViewProduct() {
   const shareUrl = `${base}?item=${encodeURIComponent(qvProduct.code)}`;
   if (navigator.share) {
     navigator.share({
-      title: `${qvProduct.name} — Sujan Store`,
-      text: `Check out ${qvProduct.name} (${qvProduct.code}) at Sujan Store`,
+      title: `${qvProduct.name} — New Sujan Store`,
+      text: `Check out ${qvProduct.name} (${qvProduct.code}) at New Sujan Store`,
       url: shareUrl,
     }).catch(() => {});
   } else {
@@ -2513,7 +2513,7 @@ function buildOrderMessage() {
   }
 
   let total = 0;
-  const lines = ["*New Order — Sujan Store*", ""];
+  const lines = ["*New Order — New Sujan Store*", ""];
   entries.forEach(([code, qty], idx) => {
     const p = PRODUCTS.find(x => x.code === code);
     const sub = p.price > 0 ? p.price * qty : 0;
@@ -2556,7 +2556,7 @@ function sendOrderEmail(msg) {
 
   let total = 0;
   const payload = {
-    _subject: `New Order — Sujan Store (${name})`,
+    _subject: `New Order — New Sujan Store (${name})`,
     _cc: ORDER_CC_EMAILS,
     _template: "table",
     _captcha: "false",
